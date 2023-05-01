@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A07575"
+    tools:context=".ui.RegistroActivity">
+
+    <TextView
+        android:id="@+id/tVNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textColor="#FBFAFA"
+        app:layout_constraintBottom_toTopOf="@+id/tVContrasenya"
+        app:layout_constraintEnd_toStartOf="@+id/eTextNombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/eTextNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#FBFAFA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tVNombre"
+        app:layout_constraintTop_toTopOf="@+id/tVNombre" />
+
+    <TextView
+        android:id="@+id/tVContrasenya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="71dp"
+        android:text="Contraseña"
+        android:textColor="#FAF7F7"
+        app:layout_constraintBottom_toTopOf="@+id/tVEmail"
+        app:layout_constraintEnd_toStartOf="@+id/eTextContrasenya"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tVNombre" />
+
+    <TextView
+        android:id="@+id/tVEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Email"
+        android:textColor="#FDFCFC"
+        app:layout_constraintBottom_toTopOf="@+id/tVLocalidad"
+        app:layout_constraintEnd_toStartOf="@+id/eTextEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tVContrasenya" />
+
+    <TextView
+        android:id="@+id/tVLocalidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="Localidad"
+        android:textColor="#FBFAFA"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/eTextLocalidad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tVEmail" />
+
+    <EditText
+        android:id="@+id/eTextContrasenya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:textColor="#FBFAFA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tVContrasenya"
+        app:layout_constraintTop_toTopOf="@+id/tVContrasenya" />
+
+    <EditText
+        android:id="@+id/eTextEmail"
+        android:layout_width="284dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textColor="#FDFBFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tVEmail"
+        app:layout_constraintTop_toTopOf="@+id/tVEmail" />
+
+    <EditText
+        android:id="@+id/eTextLocalidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#FDFCFC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tVLocalidad"
+        app:layout_constraintTop_toTopOf="@+id/tVLocalidad" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5722"
+        android:text="Button"
+        android:textColor="#F8F6F6"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tVLocalidad" />
+</androidx.constraintlayout.widget.ConstraintLayout>
