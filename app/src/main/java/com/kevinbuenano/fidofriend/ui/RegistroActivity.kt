@@ -1,6 +1,7 @@
 package com.kevinbuenano.fidofriend.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
@@ -18,16 +19,41 @@ class RegistroActivity : AppCompatActivity() {
 
         usuarioViewModel = ViewModelProvider(this)[UsuarioViewModel::class.java]
 
-        usuarioViewModel.insertUsuarioLD.observe(this){
-        usuarios.add(it)
+        usuarioViewModel.insertUsuarioLD.observe(this) {
+            usuarios.add(it)
         }
-        binding.btnRegistrar.setOnClickListener{
-            usuarioNuevo = UsuarioEntity(id = 0, binding.eTextNombre.text.toString(), binding.eTextContrasenya.text.toString(), binding.eTextEmail.text.toString(), binding.eTextLocalidad.text.toString())
+        binding.btnRegistrar.setOnClickListener {
 
+            usuarioNuevo = UsuarioEntity(
+                id = 0,
+                binding.eTextNombre.text.toString(),
+                binding.eTextContrasenya.text.toString(),
+                binding.eTextEmail.text.toString(),
+                binding.eTextLocalidad.text.toString()
+            )
+            if (validarInput(usuarioNuevo)){
+                addUsuario()
+                finish()
+            }else{
+                Toast.makeText(applicationContext, "Introduzca los datos!", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
-    private fun addUsuario(){
+    //Registrar Usuario
+    private fun addUsuario() {
         usuarioViewModel.add(usuarioNuevo)
+        Toast.makeText(applicationContext, "Usuario registrado!", Toast.LENGTH_SHORT).show()
+
+    }
+
+    private fun validarInput(usuarioNuevo: UsuarioEntity): Boolean {
+        if (usuarioNuevo.nombre.isEmpty() ||
+            usuarioNuevo.contrasenya.isEmpty() ||
+            usuarioNuevo.nombre.isEmpty()
+        ) {
+            return false
+        }
+        return true
     }
 }
