@@ -61,7 +61,7 @@
         android:layout_marginTop="68dp"
         android:text="Localidad"
         android:textColor="#FBFAFA"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegistrar"
         app:layout_constraintEnd_toStartOf="@+id/eTextLocalidad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tVEmail" />
@@ -101,11 +101,11 @@
         app:layout_constraintTop_toTopOf="@+id/tVLocalidad" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#FF5722"
-        android:text="Button"
+        android:text="Registrar"
         android:textColor="#F8F6F6"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

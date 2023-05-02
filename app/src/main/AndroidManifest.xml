@@ -12,7 +12,7 @@
         android:theme="@style/Theme.FidoFriend"
         tools:targetApi="31">
         <activity
-            android:name=".RegistroActivity"
+            android:name=".ui.RegistroActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
