@@ -22,20 +22,30 @@ class RegistroActivity : AppCompatActivity() {
         usuarioViewModel.insertUsuarioLD.observe(this) {
             usuarios.add(it)
         }
-        binding.btnRegistrar.setOnClickListener {
 
-            usuarioNuevo = UsuarioEntity(
-                id = 0,
-                binding.eTextNombre.text.toString(),
-                binding.eTextContrasenya.text.toString(),
-                binding.eTextEmail.text.toString(),
-                binding.eTextLocalidad.text.toString()
-            )
-            if (validarInput(usuarioNuevo)){
-                addUsuario()
-                finish()
-            }else{
-                Toast.makeText(applicationContext, "Introduzca los datos!", Toast.LENGTH_LONG).show()
+        //Cuando se pulse el botón se realizarán los pasos necesarios para añadir el usuario a la base de datos.
+        binding.btnRegistrar.setOnClickListener {
+            try {
+                usuarioNuevo = UsuarioEntity(
+                    id = 0,
+                    binding.eTextNombre.text.toString(),
+                    binding.eTextContrasenya.text.toString(),
+                    binding.eTextEmail.text.toString(),
+                    binding.eTextLocalidad.text.toString()
+                )
+                if (validarInput(usuarioNuevo)) {
+                    addUsuario()
+                    finish()
+                } else {
+                    Toast.makeText(applicationContext, "Introduzca los datos!", Toast.LENGTH_LONG)
+                        .show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    applicationContext,
+                    "Los datos ya están registrados",
+                    Toast.LENGTH_LONG
+                )
             }
         }
     }

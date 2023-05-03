@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EA6F48"
-    tools:context=".ui.MainActivity">
+    android:background="#E6D4CE"
+    tools:context=".ui.LoginActivity">
 
     <TextView
         android:id="@+id/tVInfo"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:text="Iniciar Sesión"
-        android:textColor="#FAF7F7"
+        android:textColor="#0E0E0E"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tVNombre"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#F8F6F6"
+        android:textColor="#070707"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tVNombre"
         app:layout_constraintTop_toTopOf="@+id/tVNombre" />
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre"
-        android:textColor="#FAF7F7"
+        android:textColor="#0C0C0C"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tVContrasenya"
         app:layout_constraintEnd_toStartOf="@+id/eTextNombre"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="Contraseña"
-        android:textColor="#F8F6F6"
+        android:textColor="#090909"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/btnAcceder"
         app:layout_constraintEnd_toStartOf="@+id/eTextContrasenya"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:textColor="#FBFAFA"
+        android:textColor="#070707"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tVContrasenya"
         app:layout_constraintTop_toTopOf="@+id/tVContrasenya" />
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"
-        android:backgroundTint="#E96F48"
+        android:backgroundTint="#B02E05"
         android:text="Registrarse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
