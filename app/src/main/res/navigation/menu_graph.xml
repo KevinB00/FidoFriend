@@ -11,13 +11,13 @@
         android:label="fragment_perfil"
         tools:layout="@layout/fragment_perfil" />
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.kevinbuenano.fidofriend.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
         android:id="@+id/calendarioFragment"
         android:name="com.kevinbuenano.fidofriend.ui.home.CalendarioFragment"
         android:label="fragment_calendario"
         tools:layout="@layout/fragment_calendario" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>
