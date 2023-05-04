@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menu_graph.xml">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_graph.xml"
+    app:startDestination="@id/homeFragment">
 
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.home.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/calendarioFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.home.CalendarioFragment"
+        android:label="fragment_calendario"
+        tools:layout="@layout/fragment_calendario" />
 </navigation>

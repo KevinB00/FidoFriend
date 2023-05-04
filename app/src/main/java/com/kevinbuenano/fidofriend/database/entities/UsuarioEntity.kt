@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "usuario",
         indices = arrayOf(
             Index(
-                value = *arrayOf("nombre","email"),
+                value = arrayOf("nombre","email"),
                 name = "idx_nombre_email",
                 unique = true
             )

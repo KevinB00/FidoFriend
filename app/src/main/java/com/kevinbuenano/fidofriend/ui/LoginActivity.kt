@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.ActivityLoginBinding
+import com.kevinbuenano.fidofriend.ui.home.MenuActivity
 import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
@@ -41,6 +42,10 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Rellene los datos!", Toast.LENGTH_LONG)
                 }else {
                     cargarUsuario()
+                    var nombre: String = usuarioEntity.nombre
+                    val intent = Intent(this, MenuActivity::class.java).putExtra("nombre", nombre)
+                    startActivity(intent)
+                    finish()
                 }
             }catch (e: Exception){
                 Toast.makeText(applicationContext, "Compruebe los datos introducidos", Toast.LENGTH_LONG)
