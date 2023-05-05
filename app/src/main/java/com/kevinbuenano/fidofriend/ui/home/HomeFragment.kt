@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.kevinbuenano.fidofriend.adapters.MascotaAdapter
 import com.kevinbuenano.fidofriend.databinding.FragmentHomeBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,7 +32,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerPerros.adapter
+        binding.recyclerPerros.adapter = MascotaAdapter()
 
     }
 }

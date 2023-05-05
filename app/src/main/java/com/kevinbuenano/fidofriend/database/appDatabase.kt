@@ -4,18 +4,26 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 
 
-@Database(entities = arrayOf(UsuarioEntity::class), version = 1)
+@Database(entities = arrayOf(UsuarioEntity::class, MascotaEntity::class), version = 1)
 abstract class appDatabase : RoomDatabase() {
     abstract fun usuarioDao() : UsuarioDAO
+    abstract fun mascotaDao(): MascotaDAO
 
     companion object {
-        private var instance:UsuarioDAO? = null
+        private var instance:appDatabase? = null
 
-        fun getInstance(context: Context): UsuarioDAO{
-            return instance ?: Room.databaseBuilder(context, appDatabase::class.java, "fidofriend").build().usuarioDao().also { instance = it }
+        fun getInstance(context: Context): appDatabase{
+            synchronized(this){
+                var instance = instance
+                if (instance == null){
+                    instance = Room.databaseBuilder(context.applicationContext, appDatabase::class.java, "fidofriend").build()
+                }
+                return instance
+            }
         }
     }
 }
