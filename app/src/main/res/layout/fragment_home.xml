@@ -53,18 +53,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabPerros">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:orientation="horizontal">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerPerros"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-        </LinearLayout>
     </HorizontalScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -88,14 +82,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabGatos">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:orientation="vertical">
-
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerGatos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-        </LinearLayout>
     </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

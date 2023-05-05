@@ -4,13 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.kevinbuenano.fidofriend.database.UsuarioDAO
 import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UsuarioViewModel(application: Application, private val dao: UsuarioDAO): AndroidViewModel(application) {
+class UsuarioViewModel(application: Application): AndroidViewModel(application) {
     lateinit var usuarioEntity: UsuarioEntity
     val context = application
     var db: appDatabase = appDatabase.getInstance(context)
@@ -22,19 +21,19 @@ class UsuarioViewModel(application: Application, private val dao: UsuarioDAO): A
 
     fun cargarUsuario(nombre: String, contrasenya: String): UsuarioEntity{
         viewModelScope.launch(Dispatchers.IO) {
-             usuarioEntity =  dao.cargarUsuario(nombre, contrasenya)
+             usuarioEntity =  db.usuarioDao().cargarUsuario(nombre, contrasenya)
         }
         return usuarioEntity
     }
     fun getAllUsuarios(){
         viewModelScope.launch(Dispatchers.IO){
-            usuarioListLD.postValue(dao.getAllUsuarios())
+            usuarioListLD.postValue(db.usuarioDao().getAllUsuarios())
         }
     }
     fun add(usuario: UsuarioEntity){
         viewModelScope.launch(Dispatchers.IO){
-            val id = dao.addUsuario(usuario)
-            val recoveryUsuario = dao.getUsuarioById(id)
+            val id = db.usuarioDao().addUsuario(usuario)
+            val recoveryUsuario = db.usuarioDao().getUsuarioById(id)
             insertUsuarioLD.postValue(recoveryUsuario)
         }
     }
