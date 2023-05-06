@@ -8,7 +8,7 @@ import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 
 
-@Database(entities = arrayOf(UsuarioEntity::class, MascotaEntity::class), version = 1)
+@Database(entities = arrayOf(UsuarioEntity::class, MascotaEntity::class), version = 1, exportSchema = false)
 abstract class appDatabase : RoomDatabase() {
     abstract fun usuarioDao() : UsuarioDAO
     abstract fun mascotaDao(): MascotaDAO

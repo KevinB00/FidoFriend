@@ -10,24 +10,6 @@
 
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabGatos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00BBD3"
-        app:layout_constraintBottom_toTopOf="@+id/listaGatos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listaPerros"
-        app:tabTextColor="#FAF6F6">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gatos" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabPerros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,12 +35,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabPerros">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerPerros"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerPerros"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+    </HorizontalScrollView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabGatos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00BBD3"
+        app:layout_constraintBottom_toTopOf="@+id/listaGatos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listaPerros"
+        app:tabTextColor="#FAF6F6">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gatos" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/listaGatos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabGatos">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerGatos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </HorizontalScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,18 +89,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listaGatos" />
 
-    <HorizontalScrollView
-        android:id="@+id/listaGatos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/floatingActionButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabGatos">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerGatos"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

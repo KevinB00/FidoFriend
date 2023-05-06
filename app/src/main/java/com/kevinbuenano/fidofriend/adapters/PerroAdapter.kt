@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
 import com.kevinbuenano.fidofriend.databinding.ViewPerroItemBinding
 
-class MascotaAdapter(private val perros: List<MascotaEntity>): RecyclerView.Adapter<MascotaAdapter.ViewHolder>() {
+class PerroAdapter(private val perros: List<MascotaEntity>): RecyclerView.Adapter<PerroAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ViewPerroItemBinding.inflate(
@@ -22,9 +22,9 @@ class MascotaAdapter(private val perros: List<MascotaEntity>): RecyclerView.Adap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(perros[position])
     }
-    class ViewHolder(binding: ViewPerroItemBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ViewPerroItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(perro: MascotaEntity){
-
+            binding.tViewNombrePerro.text = perro.nombre
         }
     }
 
