@@ -21,8 +21,4 @@ class MascotaViewModel(application: Application): AndroidViewModel(application){
             tipoMascotaLD.postValue(db.mascotaDao().getPerroGato(tipoMascota))
         }
     }
-
-    infix fun by(activityViewModels: Lazy<MascotaViewModel>) {
-
-    }
 }

@@ -1,17 +1,14 @@
 package com.kevinbuenano.fidofriend.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.ActivityLoginBinding
 import com.kevinbuenano.fidofriend.ui.home.MenuActivity
-import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -42,8 +39,8 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Rellene los datos!", Toast.LENGTH_LONG)
                 }else {
                     cargarUsuario()
-                    var nombre: String = usuarioEntity.nombre
-                    val intent = Intent(this, MenuActivity::class.java).putExtra("nombre", nombre)
+                    var usuario_id: Int = usuarioEntity.id
+                    val intent = Intent(this, MenuActivity::class.java).putExtra("usuarioId", usuario_id)
                     startActivity(intent)
                     finish()
                 }

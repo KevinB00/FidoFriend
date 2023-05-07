@@ -15,9 +15,10 @@ class UsuarioViewModel(application: Application): AndroidViewModel(application) 
     var db: appDatabase = appDatabase.getInstance(context)
 
 
-    val insertUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
-    val usuarioListLD: MutableLiveData<MutableList<UsuarioEntity>> = MutableLiveData()
-    val cargarUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
+     val insertUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
+     val usuarioListLD: MutableLiveData<MutableList<UsuarioEntity>> = MutableLiveData()
+     val cargarUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
+
 
     fun cargarUsuario(nombre: String, contrasenya: String): UsuarioEntity{
         viewModelScope.launch(Dispatchers.IO) {
@@ -30,10 +31,16 @@ class UsuarioViewModel(application: Application): AndroidViewModel(application) 
             usuarioListLD.postValue(db.usuarioDao().getAllUsuarios())
         }
     }
+    fun getUsuarioById(id: Int): UsuarioEntity{
+        viewModelScope.launch(Dispatchers.IO) {
+            usuarioEntity = db.usuarioDao().getUsuarioById(id)
+        }
+        return usuarioEntity
+    }
     fun add(usuario: UsuarioEntity){
         viewModelScope.launch(Dispatchers.IO){
             val id = db.usuarioDao().addUsuario(usuario)
-            val recoveryUsuario = db.usuarioDao().getUsuarioById(id)
+            val recoveryUsuario = db.usuarioDao().getUsuarioById(id.toInt())
             insertUsuarioLD.postValue(recoveryUsuario)
         }
     }
