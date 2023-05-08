@@ -1,11 +1,16 @@
 package com.kevinbuenano.fidofriend.ui.home
 
 import android.os.Bundle
+import android.provider.Settings.Panel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Toast
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
 import com.kevinbuenano.fidofriend.database.viewmodel.MascotaViewModel
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
@@ -22,11 +27,14 @@ import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
  */
 class PerfilFragment : Fragment() {
     lateinit var binding: FragmentPerfilBinding
-    var mascotas: MutableList<MascotaEntity> = mutableListOf()
-    private val mascotaViewModel: MascotaViewModel by activityViewModels()
-    private val usuarioViewModel: UsuarioViewModel by activityViewModels()
+    private lateinit var usuarioViewModel: UsuarioViewModel
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.let {
+            usuarioViewModel = ViewModelProvider(it)[UsuarioViewModel::class.java]
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +46,71 @@ class PerfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        usuarioViewModel.updateUsuarioLD.observe(viewLifecycleOwner) {
+            if (it == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "El dato introducido no es válido",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                usuarioViewModel.cargarUsuarioLD.value = it
+            }
+        }
 
+        binding.btnNombre.setOnClickListener {
+            try {
+                var cambioNombre = binding.editNombre.text.toString()
+                usuarioViewModel.cargarUsuarioLD.value!!.nombre = cambioNombre
+                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+            }catch (e: Exception){
+                Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
+            }
+        }
+        binding.btnContrasenya.setOnClickListener {
+            try {
+                var cambioContrasenya = binding.editContrasenya.text.toString()
+                usuarioViewModel.cargarUsuarioLD.value!!.contrasenya = cambioContrasenya
+
+                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+            }catch (e: Exception){
+                Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
+            }
+        }
+        binding.btnEmail.setOnClickListener {
+            try {
+                var cambioEmail = binding.editEmail.text.toString()
+                usuarioViewModel.cargarUsuarioLD.value!!.contrasenya = cambioEmail
+
+                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+            }catch (e: Exception){
+                Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
+            }
+        }
+        binding.btnLocalidad.setOnClickListener {
+            try {
+                var cambioLocalidad = binding.editLocalidad.text.toString()
+                usuarioViewModel.cargarUsuarioLD.value!!.contrasenya = cambioLocalidad
+
+                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+            }catch (e: Exception){
+                Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
+            }
+        }
+        binding.btnBorrarCuenta.setOnClickListener {
+            try {
+                usuarioViewModel.deleteUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+            }catch (e: Exception) {
+                Toast.makeText(requireContext(), "Pruebe más tarde", Toast.LENGTH_LONG).show()
+
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var nombreUsuario = usuarioViewModel.cargarUsuarioLD.value!!.nombre
+        requireActivity().title = "$nombreUsuario"
     }
 
 }

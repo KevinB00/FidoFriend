@@ -13,10 +13,9 @@ import com.kevinbuenano.fidofriend.ui.home.MenuActivity
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var usuarioViewModel: UsuarioViewModel
-    private lateinit var usuarioEntity: UsuarioEntity
     lateinit var nombre: String
     lateinit var contrasenya: String
-    var usuarios: MutableList<UsuarioEntity> = mutableListOf()
+    var usuario_id: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
@@ -24,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         usuarioViewModel = ViewModelProvider(this)[UsuarioViewModel::class.java]
 
         usuarioViewModel.cargarUsuarioLD.observe(this){
-            usuarios.add(it)
+            usuario_id = it.id
         }
         binding.btnRegistrarse.setOnClickListener {
             val intent = Intent(this, RegistroActivity::class.java)
@@ -39,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Rellene los datos!", Toast.LENGTH_LONG)
                 }else {
                     cargarUsuario()
-                    var usuario_id: Int = usuarioEntity.id
                     val intent = Intent(this, MenuActivity::class.java).putExtra("usuarioId", usuario_id)
                     startActivity(intent)
                     finish()
@@ -52,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun cargarUsuario(){
-        usuarioEntity = usuarioViewModel.cargarUsuario(nombre, contrasenya)
+        usuarioViewModel.cargarUsuario(nombre, contrasenya)
     }
 
 
