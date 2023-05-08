@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kevinbuenano.fidofriend.adapters.GatoAdapter
 import com.kevinbuenano.fidofriend.adapters.PerroAdapter
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
-import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.viewmodel.MascotaViewModel
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.FragmentHomeBinding
@@ -26,21 +25,14 @@ class HomeFragment : Fragment() {
     lateinit var adapterGato: GatoAdapter
     private val mascotaViewModel: MascotaViewModel by activityViewModels()
     private lateinit var usuarioViewModel: UsuarioViewModel
-    lateinit var usuario: UsuarioEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let {
             usuarioViewModel = ViewModelProvider(it)[UsuarioViewModel::class.java]
         }
-        cargarUsuario()
     }
 
-    private fun cargarUsuario() {
-        var usuario_id = requireActivity().intent.getIntExtra("usuario_id", 0)
-        usuarioViewModel.getUsuarioById(usuario_id)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +45,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var idUsuario = requireActivity().intent.getIntExtra("usuarioId",-1)
+        usuarioViewModel.getUsuarioById(idUsuario)
         cargarPerros()
         cargarGatos()
         mascotaViewModel.tipoMascotaLD.observe(viewLifecycleOwner){

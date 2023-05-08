@@ -18,7 +18,7 @@ interface UsuarioDAO {
     fun addUsuario(usuarioEntity: UsuarioEntity):Long
 
     //Encontrar un usuario por el id
-    @Query(value = "SELECT * FROM usuario WHERE usuario_id LIKE :id")
+    @Query("SELECT * FROM usuario WHERE usuario_id =(:id)")
     fun getUsuarioById(id: Int): UsuarioEntity
 
     //Actualiza los datos de un usuario

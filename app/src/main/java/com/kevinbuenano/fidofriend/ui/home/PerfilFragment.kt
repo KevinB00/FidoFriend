@@ -1,18 +1,12 @@
 package com.kevinbuenano.fidofriend.ui.home
 
 import android.os.Bundle
-import android.provider.Settings.Panel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Toast
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
-import com.kevinbuenano.fidofriend.database.viewmodel.MascotaViewModel
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
 
@@ -39,13 +33,13 @@ class PerfilFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
        binding = FragmentPerfilBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         usuarioViewModel.updateUsuarioLD.observe(viewLifecycleOwner) {
             if (it == null) {
                 Toast.makeText(
@@ -54,15 +48,15 @@ class PerfilFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                usuarioViewModel.cargarUsuarioLD.value = it
+                usuarioViewModel.usuario = it
             }
         }
 
         binding.btnNombre.setOnClickListener {
             try {
                 var cambioNombre = binding.editNombre.text.toString()
-                usuarioViewModel.cargarUsuarioLD.value!!.nombre = cambioNombre
-                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+                usuarioViewModel.usuario.nombre = cambioNombre
+                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -70,9 +64,9 @@ class PerfilFragment : Fragment() {
         binding.btnContrasenya.setOnClickListener {
             try {
                 var cambioContrasenya = binding.editContrasenya.text.toString()
-                usuarioViewModel.cargarUsuarioLD.value!!.contrasenya = cambioContrasenya
+                usuarioViewModel.usuario.contrasenya = cambioContrasenya
 
-                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -80,9 +74,9 @@ class PerfilFragment : Fragment() {
         binding.btnEmail.setOnClickListener {
             try {
                 var cambioEmail = binding.editEmail.text.toString()
-                usuarioViewModel.cargarUsuarioLD.value!!.contrasenya = cambioEmail
+                usuarioViewModel.usuario.contrasenya = cambioEmail
 
-                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -90,16 +84,16 @@ class PerfilFragment : Fragment() {
         binding.btnLocalidad.setOnClickListener {
             try {
                 var cambioLocalidad = binding.editLocalidad.text.toString()
-                usuarioViewModel.cargarUsuarioLD.value!!.contrasenya = cambioLocalidad
+                usuarioViewModel.usuario.contrasenya = cambioLocalidad
 
-                usuarioViewModel.updateUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
         }
         binding.btnBorrarCuenta.setOnClickListener {
             try {
-                usuarioViewModel.deleteUsuario(usuarioViewModel.cargarUsuarioLD.value!!)
+                usuarioViewModel.deleteUsuario(usuarioViewModel.usuario)
             }catch (e: Exception) {
                 Toast.makeText(requireContext(), "Pruebe más tarde", Toast.LENGTH_LONG).show()
 
@@ -109,7 +103,7 @@ class PerfilFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        var nombreUsuario = usuarioViewModel.cargarUsuarioLD.value!!.nombre
+        var nombreUsuario = usuarioViewModel.usuario.nombre
         requireActivity().title = "$nombreUsuario"
     }
 

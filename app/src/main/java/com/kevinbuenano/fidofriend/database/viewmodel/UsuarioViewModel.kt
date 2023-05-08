@@ -2,7 +2,6 @@ package com.kevinbuenano.fidofriend.database.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kevinbuenano.fidofriend.database.appDatabase
@@ -13,6 +12,7 @@ import kotlinx.coroutines.launch
 class UsuarioViewModel(application: Application): AndroidViewModel(application) {
     val context = application
     var db: appDatabase = appDatabase.getInstance(context)
+    lateinit var usuario: UsuarioEntity
 
 
      val insertUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
@@ -34,7 +34,8 @@ class UsuarioViewModel(application: Application): AndroidViewModel(application) 
     }
     fun getUsuarioById(id: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            cargarUsuarioLD.postValue(db.usuarioDao().getUsuarioById(id))
+            usuario = db.usuarioDao().getUsuarioById(id)
+            cargarUsuarioLD.postValue(usuario)
         }
     }
     fun add(usuario: UsuarioEntity){
