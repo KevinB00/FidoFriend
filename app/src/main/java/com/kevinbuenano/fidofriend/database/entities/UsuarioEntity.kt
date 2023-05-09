@@ -18,13 +18,13 @@ import androidx.room.PrimaryKey
 data class UsuarioEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "usuario_id")
-    var id:Int = 0,
+    var id:Int,
     @ColumnInfo(name = "nombre")
-    var nombre:String ="",
+    var nombre:String,
     @ColumnInfo(name = "contrasenya")
-    var contrasenya:String ="",
+    var contrasenya:String,
     @ColumnInfo(name = "email")
-    var email:String ="",
+    var email:String,
     @ColumnInfo(name = "localidad")
-    var localidad:String =""
+    var localidad:String
 )

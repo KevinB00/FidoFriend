@@ -14,6 +14,7 @@ abstract class appDatabase : RoomDatabase() {
     abstract fun mascotaDao(): MascotaDAO
 
     companion object {
+        @Volatile
         private var instance:appDatabase? = null
 
         fun getInstance(context: Context): appDatabase{

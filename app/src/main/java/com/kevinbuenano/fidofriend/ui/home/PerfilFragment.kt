@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
 
@@ -22,14 +22,9 @@ import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
  */
 class PerfilFragment : Fragment() {
     lateinit var binding: FragmentPerfilBinding
-    private var usuarioViewModel: UsuarioViewModel by activityViewModels()
+    lateinit var usuario: UsuarioEntity
+    lateinit var usuarioViewModel: UsuarioViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.let {
-            usuarioViewModel = ViewModelProvider(it)[UsuarioViewModel::class.java]
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +35,7 @@ class PerfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        usuarioViewModel = ViewModelProvider(requireActivity()).get(UsuarioViewModel::class.java)
 
         usuarioViewModel.updateUsuarioLD.observe(viewLifecycleOwner) {
             if (it == null) {
@@ -49,15 +45,19 @@ class PerfilFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                usuarioViewModel.usuario = it
+                usuarioViewModel.sesionUsuarioLD.value = it
             }
         }
 
         binding.btnNombre.setOnClickListener {
             try {
                 var cambioNombre = binding.editNombre.text.toString()
-                usuarioViewModel.usuario.nombre = cambioNombre
-                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
+                usuarioViewModel.sesionUsuarioLD.value?.nombre = cambioNombre
+                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
+                    usuarioViewModel.updateUsuario(
+                        it1
+                    )
+                }
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -65,9 +65,13 @@ class PerfilFragment : Fragment() {
         binding.btnContrasenya.setOnClickListener {
             try {
                 var cambioContrasenya = binding.editContrasenya.text.toString()
-                usuarioViewModel.usuario.contrasenya = cambioContrasenya
+                usuarioViewModel.sesionUsuarioLD.value?.contrasenya = cambioContrasenya
 
-                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
+                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
+                    usuarioViewModel.updateUsuario(
+                        it1
+                    )
+                }
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -75,9 +79,13 @@ class PerfilFragment : Fragment() {
         binding.btnEmail.setOnClickListener {
             try {
                 var cambioEmail = binding.editEmail.text.toString()
-                usuarioViewModel.usuario.contrasenya = cambioEmail
+                usuarioViewModel.sesionUsuarioLD.value?.email = cambioEmail
 
-                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
+                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
+                    usuarioViewModel.updateUsuario(
+                        it1
+                    )
+                }
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -85,16 +93,24 @@ class PerfilFragment : Fragment() {
         binding.btnLocalidad.setOnClickListener {
             try {
                 var cambioLocalidad = binding.editLocalidad.text.toString()
-                usuarioViewModel.usuario.contrasenya = cambioLocalidad
+                usuarioViewModel.sesionUsuarioLD.value?.localidad = cambioLocalidad
 
-                usuarioViewModel.updateUsuario(usuarioViewModel.usuario)
+                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
+                    usuarioViewModel.updateUsuario(
+                        it1
+                    )
+                }
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
         }
         binding.btnBorrarCuenta.setOnClickListener {
             try {
-                usuarioViewModel.deleteUsuario(usuarioViewModel.usuario)
+                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
+                    usuarioViewModel.deleteUsuario(
+                        it1
+                    )
+                }
             }catch (e: Exception) {
                 Toast.makeText(requireContext(), "Pruebe más tarde", Toast.LENGTH_LONG).show()
 
@@ -104,7 +120,7 @@ class PerfilFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        var nombreUsuario = usuarioViewModel.usuario.nombre
+        var nombreUsuario = usuarioViewModel.sesionUsuarioLD.value?.nombre
         requireActivity().title = "$nombreUsuario"
     }
 

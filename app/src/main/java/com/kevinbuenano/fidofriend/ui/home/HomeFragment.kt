@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +22,9 @@ class HomeFragment : Fragment() {
     var mascotas: MutableList<MascotaEntity> = mutableListOf()
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
-    private val mascotaViewModel: MascotaViewModel by activityViewModels()
-    private var usuarioViewModel: UsuarioViewModel by activityViewModels()
+    private lateinit var mascotaViewModel: MascotaViewModel
+    private lateinit var usuarioViewModel: UsuarioViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +37,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var nombreUsuario = requireActivity().intent.getStringExtra("nombreUsuario")
+        usuarioViewModel = ViewModelProvider(requireActivity()).get(UsuarioViewModel::class.java)
+        mascotaViewModel = ViewModelProvider(requireActivity()).get(MascotaViewModel::class.java)
+
+        var nombreUsuario = requireActivity().intent.getStringExtra("nomnbreUsuario")
         if (nombreUsuario != null) {
             usuarioViewModel.getUsuarioByName(nombreUsuario)
-        }
-        usuarioViewModel.cargarUsuarioLD.observe(viewLifecycleOwner){
-            usuarioViewModel.usuario = it
         }
         cargarPerros()
         cargarGatos()
@@ -89,4 +89,3 @@ class HomeFragment : Fragment() {
         }
     }
 }
-

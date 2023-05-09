@@ -16,24 +16,24 @@ interface UsuarioDAO {
 
     //Añadir un usuario al registrarse
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addUsuario(usuarioEntity: UsuarioEntity)
+    fun addUsuario(usuarioEntity: UsuarioEntity)
 
-    //Encontrar un usuario por el nombre
-    @Query("SELECT * FROM usuario WHERE nombre = (:nombreUsuariod)")
-    suspend fun getUsuarioByName(nombreUsuariod: String): UsuarioEntity
-
-    @Query("SELECT * FROM usuario WHERE usuario_id = (:id)")
-    suspend fun getUsuarioById(id: Int): UsuarioEntity
+    //Encontrar un usuario por el id
+    @Query("SELECT * FROM usuario WHERE usuario_id =:id")
+    fun getUsuarioById(id: Int): UsuarioEntity
 
     //Actualiza los datos de un usuario
     @Update
-    suspend fun updateUsuario(usuarioEntity: UsuarioEntity): Int
+    fun updateUsuario(usuarioEntity: UsuarioEntity): Int
 
     //Borra a un usuario de la base de datos
     @Delete
-    suspend fun deleteUsuario(usuarioEntity: UsuarioEntity): Int
+    fun deleteUsuario(usuarioEntity: UsuarioEntity): Int
 
     //Se inicia sesión con un usuario de la base de datos
     @Query("SELECT * FROM usuario WHERE nombre=(:nombre) AND contrasenya=(:contrasenya)")
-    suspend fun iniciarSesion(nombre: String, contrasenya: String): UsuarioEntity
+    fun iniciarSesion(nombre: String, contrasenya: String): UsuarioEntity
+
+    @Query("SELECT * FROM usuario WHERE nombre=(:nombre)")
+    fun getUsuarioByName(nombre: String): UsuarioEntity
 }

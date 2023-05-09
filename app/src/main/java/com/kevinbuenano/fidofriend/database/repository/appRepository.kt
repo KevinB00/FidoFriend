@@ -19,6 +19,8 @@ class appRepository(private val usuarioDAO: UsuarioDAO, private val mascotaDAO: 
 
     suspend fun getUsuarioByName(nombre: String) = usuarioDAO.getUsuarioByName(nombre)
 
+    suspend fun getUsuarioById(id: Int) = usuarioDAO.getUsuarioById(id)
+
 
     suspend fun addMascota(mascota: MascotaEntity) = mascotaDAO.addMascota(mascota)
 

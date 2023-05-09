@@ -10,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MascotaViewModel(application: Application): AndroidViewModel(application){
-    lateinit var mascotaEntity: MascotaEntity
     val context = application
     var db: appDatabase = appDatabase.getInstance(context)
 

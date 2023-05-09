@@ -3,11 +3,8 @@ package com.kevinbuenano.fidofriend.ui
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
-import com.kevinbuenano.fidofriend.database.repository.appRepository
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.ActivityLoginBinding
 import com.kevinbuenano.fidofriend.ui.home.MenuActivity
@@ -22,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
 
-        usuarioViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))[UsuarioViewModel::class.java]
+        usuarioViewModel = ViewModelProvider(this)[UsuarioViewModel::class.java]
 
         usuarioViewModel.sesionUsuarioLD.observe(this){
             usuario_nombre = it.nombre
@@ -52,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun cargarUsuario(){
+
         usuarioViewModel.iniciarSesion(nombre, contrasenya)
     }
 
