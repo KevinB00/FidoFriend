@@ -12,16 +12,11 @@ class RegistroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistroBinding
     private lateinit var usuarioViewModel: UsuarioViewModel
     private lateinit var usuarioNuevo: UsuarioEntity
-    var usuarios: MutableList<UsuarioEntity> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityRegistroBinding.inflate(layoutInflater).also { binding = it }.root)
 
-        usuarioViewModel = ViewModelProvider(this)[UsuarioViewModel::class.java]
-
-        usuarioViewModel.insertUsuarioLD.observe(this) {
-            usuarios.add(it)
-        }
+        usuarioViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))[UsuarioViewModel::class.java]
 
         //Cuando se pulse el botón se realizarán los pasos necesarios para añadir el usuario a la base de datos.
         binding.btnRegistrar.setOnClickListener {

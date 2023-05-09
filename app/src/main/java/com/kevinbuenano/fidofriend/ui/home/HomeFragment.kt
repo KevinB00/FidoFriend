@@ -24,15 +24,7 @@ class HomeFragment : Fragment() {
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
     private val mascotaViewModel: MascotaViewModel by activityViewModels()
-    private lateinit var usuarioViewModel: UsuarioViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.let {
-            usuarioViewModel = ViewModelProvider(it)[UsuarioViewModel::class.java]
-        }
-    }
-
+    private var usuarioViewModel: UsuarioViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +37,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var idUsuario = requireActivity().intent.getIntExtra("usuarioId",-1)
-        usuarioViewModel.getUsuarioById(idUsuario)
+        var nombreUsuario = requireActivity().intent.getStringExtra("nombreUsuario")
+        if (nombreUsuario != null) {
+            usuarioViewModel.getUsuarioByName(nombreUsuario)
+        }
+        usuarioViewModel.cargarUsuarioLD.observe(viewLifecycleOwner){
+            usuarioViewModel.usuario = it
+        }
         cargarPerros()
         cargarGatos()
         mascotaViewModel.tipoMascotaLD.observe(viewLifecycleOwner){
@@ -92,3 +89,4 @@ class HomeFragment : Fragment() {
         }
     }
 }
+

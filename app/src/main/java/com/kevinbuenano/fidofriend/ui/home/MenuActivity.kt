@@ -17,12 +17,12 @@ import com.kevinbuenano.fidofriend.databinding.ActivityMenuBinding
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
+    val usuarioViewModel: UsuarioViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMenuBinding.inflate(layoutInflater).also { binding = it }.root)
         setSupportActionBar(binding.toolbar)
-        val usuarioViewModel = ViewModelProvider(this)[UsuarioViewModel::class.java]
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 

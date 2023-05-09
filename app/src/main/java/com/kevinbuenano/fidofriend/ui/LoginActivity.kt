@@ -3,9 +3,11 @@ package com.kevinbuenano.fidofriend.ui
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
+import com.kevinbuenano.fidofriend.database.repository.appRepository
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.ActivityLoginBinding
 import com.kevinbuenano.fidofriend.ui.home.MenuActivity
@@ -15,15 +17,15 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var usuarioViewModel: UsuarioViewModel
     lateinit var nombre: String
     lateinit var contrasenya: String
-    var usuario_id: Int = 0
+    var usuario_nombre: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
 
-        usuarioViewModel = ViewModelProvider(this)[UsuarioViewModel::class.java]
+        usuarioViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))[UsuarioViewModel::class.java]
 
-        usuarioViewModel.cargarUsuarioLD.observe(this){
-            usuario_id = it.id
+        usuarioViewModel.sesionUsuarioLD.observe(this){
+            usuario_nombre = it.nombre
         }
         binding.btnRegistrarse.setOnClickListener {
             val intent = Intent(this, RegistroActivity::class.java)
@@ -38,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Rellene los datos!", Toast.LENGTH_LONG)
                 }else {
                     cargarUsuario()
-                    val intent = Intent(this, MenuActivity::class.java).putExtra("usuarioId", usuario_id)
+                    val intent = Intent(this, MenuActivity::class.java).putExtra("nomnbreUsuario", usuario_nombre)
                     startActivity(intent)
                     finish()
                 }
@@ -50,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun cargarUsuario(){
-        usuarioViewModel.cargarUsuario(nombre, contrasenya)
+        usuarioViewModel.iniciarSesion(nombre, contrasenya)
     }
 
 

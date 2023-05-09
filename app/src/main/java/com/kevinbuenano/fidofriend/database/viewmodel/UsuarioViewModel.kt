@@ -3,53 +3,55 @@ package com.kevinbuenano.fidofriend.database.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
+import com.kevinbuenano.fidofriend.database.repository.appRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class UsuarioViewModel(application: Application): AndroidViewModel(application) {
-    val context = application
-    var db: appDatabase = appDatabase.getInstance(context)
-    lateinit var usuario: UsuarioEntity
+
+    var usuario: UsuarioEntity = UsuarioEntity()
+    val repository: appRepository
+
+    init {
+        val db = appDatabase.getInstance(application)
+        val usuarioDAO = db.usuarioDao()
+        val mascotaDAO = db.mascotaDao()
+        repository = appRepository(usuarioDAO, mascotaDAO)
+    }
 
 
-     val insertUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
-     val usuarioListLD: MutableLiveData<MutableList<UsuarioEntity>> = MutableLiveData()
-     val cargarUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
+     val sesionUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
      val updateUsuarioLD: MutableLiveData<UsuarioEntity?> = MutableLiveData()
      val deleteUsuarioLD: MutableLiveData<Int> = MutableLiveData()
 
 
-    fun cargarUsuario(nombre: String, contrasenya: String){
+    fun iniciarSesion(nombre: String, contrasenya: String){
         viewModelScope.launch(Dispatchers.IO) {
-            cargarUsuarioLD.postValue(db.usuarioDao().cargarUsuario(nombre, contrasenya))
+            usuario = repository.iniciarSesion(nombre, contrasenya)
+            sesionUsuarioLD.postValue(usuario)
         }
     }
-    fun getAllUsuarios(){
-        viewModelScope.launch(Dispatchers.IO){
-            usuarioListLD.postValue(db.usuarioDao().getAllUsuarios())
-        }
-    }
-    fun getUsuarioById(id: Int){
+
+    fun getUsuarioByName(nombreUsuario: String){
         viewModelScope.launch(Dispatchers.IO) {
-            usuario = db.usuarioDao().getUsuarioById(id)
-            cargarUsuarioLD.postValue(usuario)
+            usuario = repository.getUsuarioByName(nombreUsuario)
         }
     }
+
     fun add(usuario: UsuarioEntity){
         viewModelScope.launch(Dispatchers.IO){
-            val id = db.usuarioDao().addUsuario(usuario)
-            val recoveryUsuario = db.usuarioDao().getUsuarioById(id.toInt())
-            insertUsuarioLD.postValue(recoveryUsuario)
+            repository.addUsuario(usuario)
         }
     }
 
     fun updateUsuario(usuario: UsuarioEntity){
         viewModelScope.launch(Dispatchers.IO){
 
-              val res = db.usuarioDao().updateUsuario(usuario)
+              val res = repository.updateUsuario(usuario)
                if(res > 0) {
                    updateUsuarioLD.postValue(usuario)
                }else{
@@ -61,7 +63,7 @@ class UsuarioViewModel(application: Application): AndroidViewModel(application) 
 
     fun deleteUsuario(usuarioEntity: UsuarioEntity){
         viewModelScope.launch(Dispatchers.IO){
-              val res =  db.usuarioDao().deleteUsuario(usuarioEntity)
+              val res =  repository.removeUsuario(usuarioEntity)
               if (res > 0){
                   deleteUsuarioLD.postValue(usuarioEntity.id)
               }else{
