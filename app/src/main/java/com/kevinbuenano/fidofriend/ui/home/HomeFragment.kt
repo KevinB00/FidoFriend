@@ -6,9 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +25,7 @@ class HomeFragment : Fragment() {
     var mascotas: MutableList<MascotaEntity> = mutableListOf()
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
-    private lateinit var mascotaViewModel: MascotaViewModel
+    private val mascotaViewModel: MascotaViewModel by navGraphViewModels(R.id.menu_graph_xml)
     private val usuarioViewModel: UsuarioViewModel by navGraphViewModels(R.id.menu_graph_xml)
 
 
@@ -43,9 +40,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mascotaViewModel = ViewModelProvider(requireActivity()).get(MascotaViewModel::class.java)
 
-        var nombreUsuario = activity?.intent?.getStringExtra("nomnbreUsuario")
+        var nombreUsuario = requireArguments().getString("nombreUsuario")
         if (nombreUsuario != null) {
             usuarioViewModel.getUsuarioByName(nombreUsuario)
         }

@@ -19,7 +19,7 @@ interface MascotaDAO {
 
     //Añadir mascota
     @Insert
-    fun addMascota(mascotaEntity: MascotaEntity)
+    suspend fun addMascota(mascotaEntity: MascotaEntity)
 
     //Obtener mascota con el id
     @Query(value = "SELECT * FROM mascota WHERE mascota_id LIKE :id")
@@ -30,8 +30,8 @@ interface MascotaDAO {
     fun getPerroGato(tipoMascota: Int): MutableList<MascotaEntity>
 
     @Update
-    fun updateMascota(mascota: MascotaEntity): Int
+    suspend fun updateMascota(mascota: MascotaEntity): Int
 
     @Delete
-    fun deleteMascota(mascota: MascotaEntity): Int
+    suspend fun deleteMascota(mascota: MascotaEntity): Int
 }

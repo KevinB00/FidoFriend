@@ -15,8 +15,8 @@ interface UsuarioDAO {
     fun getAllUsuarios(): MutableList<UsuarioEntity>
 
     //Añadir un usuario al registrarse
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addUsuario(usuarioEntity: UsuarioEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addUsuario(usuarioEntity: UsuarioEntity)
 
     //Encontrar un usuario por el id
     @Query("SELECT * FROM usuario WHERE usuario_id =:id")
@@ -24,11 +24,11 @@ interface UsuarioDAO {
 
     //Actualiza los datos de un usuario
     @Update
-    fun updateUsuario(usuarioEntity: UsuarioEntity): Int
+    suspend fun updateUsuario(usuarioEntity: UsuarioEntity): Int
 
     //Borra a un usuario de la base de datos
     @Delete
-    fun deleteUsuario(usuarioEntity: UsuarioEntity): Int
+    suspend fun deleteUsuario(usuarioEntity: UsuarioEntity): Int
 
     //Se inicia sesión con un usuario de la base de datos
     @Query("SELECT * FROM usuario WHERE nombre=(:nombre) AND contrasenya=(:contrasenya)")

@@ -3,25 +3,23 @@ package com.kevinbuenano.fidofriend.database.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
-import com.kevinbuenano.fidofriend.database.repository.appRepository
+import com.kevinbuenano.fidofriend.database.repository.usuarioRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class UsuarioViewModel(application: Application): AndroidViewModel(application) {
-    val repository: appRepository
+    val repository: usuarioRepository
     val context = application
-    val db= appDatabase.getInstance(context)
+
 
     init {
-
+        val db= appDatabase.getDatabase(application)
         val usuarioDAO = db.usuarioDao()
-        val mascotaDAO = db.mascotaDao()
-        repository = appRepository(usuarioDAO, mascotaDAO)
+        repository = usuarioRepository(usuarioDAO)
     }
 
      val sesionUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
