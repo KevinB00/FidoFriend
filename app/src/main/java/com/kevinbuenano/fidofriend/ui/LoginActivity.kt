@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.ActivityLoginBinding
 import com.kevinbuenano.fidofriend.ui.home.MenuActivity
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -19,8 +21,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
 
-        usuarioViewModel = ViewModelProvider(this)[UsuarioViewModel::class.java]
-
+        val factory = ViewModelProvider.AndroidViewModelFactory(application)
+        usuarioViewModel = factory.create(UsuarioViewModel::class.java, CreationExtras.Empty)
         usuarioViewModel.sesionUsuarioLD.observe(this){
             usuario_nombre = it.nombre
         }

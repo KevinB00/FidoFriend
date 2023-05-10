@@ -1,19 +1,25 @@
 package com.kevinbuenano.fidofriend.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kevinbuenano.fidofriend.R
 import com.kevinbuenano.fidofriend.adapters.GatoAdapter
 import com.kevinbuenano.fidofriend.adapters.PerroAdapter
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
 import com.kevinbuenano.fidofriend.database.viewmodel.MascotaViewModel
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.FragmentHomeBinding
+import com.kevinbuenano.fidofriend.ui.newPet.NuevaMascota
 
 
 class HomeFragment : Fragment() {
@@ -23,7 +29,7 @@ class HomeFragment : Fragment() {
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
     private lateinit var mascotaViewModel: MascotaViewModel
-    private lateinit var usuarioViewModel: UsuarioViewModel
+    private val usuarioViewModel: UsuarioViewModel by navGraphViewModels(R.id.menu_graph_xml)
 
 
     override fun onCreateView(
@@ -37,10 +43,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        usuarioViewModel = ViewModelProvider(requireActivity()).get(UsuarioViewModel::class.java)
         mascotaViewModel = ViewModelProvider(requireActivity()).get(MascotaViewModel::class.java)
 
-        var nombreUsuario = requireActivity().intent.getStringExtra("nomnbreUsuario")
+        var nombreUsuario = activity?.intent?.getStringExtra("nomnbreUsuario")
         if (nombreUsuario != null) {
             usuarioViewModel.getUsuarioByName(nombreUsuario)
         }
@@ -50,6 +55,10 @@ class HomeFragment : Fragment() {
             mascotas.clear()
             mascotas.addAll(it)
 
+        }
+
+        binding.floatingActionButton.setOnClickListener {
+            var intent:Intent = Intent(activity, NuevaMascota::class.java)
         }
 
     }

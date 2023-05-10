@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navGraphViewModels
+import com.kevinbuenano.fidofriend.R
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
@@ -23,7 +25,7 @@ import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
 class PerfilFragment : Fragment() {
     lateinit var binding: FragmentPerfilBinding
     lateinit var usuario: UsuarioEntity
-    lateinit var usuarioViewModel: UsuarioViewModel
+    private val usuarioViewModel: UsuarioViewModel by navGraphViewModels(R.id.menu_graph_xml)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +37,6 @@ class PerfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        usuarioViewModel = ViewModelProvider(requireActivity()).get(UsuarioViewModel::class.java)
 
         usuarioViewModel.updateUsuarioLD.observe(viewLifecycleOwner) {
             if (it == null) {
