@@ -22,15 +22,15 @@ class UsuarioViewModel(application: Application): AndroidViewModel(application) 
         repository = usuarioRepository(usuarioDAO)
     }
 
-     val sesionUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
-     val updateUsuarioLD: MutableLiveData<UsuarioEntity?> = MutableLiveData()
-     val deleteUsuarioLD: MutableLiveData<Int> = MutableLiveData()
+     var sesionUsuarioLD: MutableLiveData<UsuarioEntity> = MutableLiveData()
+     var updateUsuarioLD: MutableLiveData<UsuarioEntity?> = MutableLiveData()
+     var deleteUsuarioLD: MutableLiveData<Int> = MutableLiveData()
 
 
     fun iniciarSesion(nombre: String, contrasenya: String){
         viewModelScope.launch(Dispatchers.IO) {
-
             sesionUsuarioLD.postValue(repository.iniciarSesion(nombre, contrasenya))
+
         }
     }
 
