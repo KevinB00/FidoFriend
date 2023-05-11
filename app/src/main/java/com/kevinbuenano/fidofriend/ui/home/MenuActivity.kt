@@ -1,5 +1,6 @@
 package com.kevinbuenano.fidofriend.ui.home
 
+import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -21,29 +22,9 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMenuBinding.inflate(layoutInflater).also { binding = it }.root)
 
-        var nombreUsuario = intent.getStringExtra("nombreUsuario")
-        val bundle: Bundle = Bundle();
-        bundle.putString("nombreUsuario", nombreUsuario );
-        val homeFragment: HomeFragment = HomeFragment();
-        homeFragment.arguments = bundle;
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, homeFragment).commit()
-
         setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
-       /* val factory = ViewModelProvider.AndroidViewModelFactory(application)
-        usuarioViewModel = factory.create(UsuarioViewModel::class.java, CreationExtras.Empty)*/
-
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.homeFragment
-        ),
-        binding.menuLayout
-            )
-
-        NavigationUI.setupWithNavController(binding.navView, navController)
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
 
         try {
             val viewModelProvider = ViewModelProvider(
@@ -57,6 +38,31 @@ class MenuActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.homeFragment
+        ),
+        binding.menuLayout
+            )
+
+        NavigationUI.setupWithNavController(binding.navView, navController)
+        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
+
+        var nombreUsuario = intent.getStringExtra("nombreUsuario")
+        val bundle = Bundle();
+        bundle.putString("nombreUsuario", nombreUsuario );
+        val homeFragment = HomeFragment();
+        homeFragment.arguments = bundle;
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment, homeFragment).commit()
+
+    }
+
+    fun getUsuarioViewModel(): UsuarioViewModel{
+        return usuarioViewModel
+    }
+
+    fun getMascotaViewModel(): MascotaViewModel{
+        return mascotaViewModel
     }
 
 }

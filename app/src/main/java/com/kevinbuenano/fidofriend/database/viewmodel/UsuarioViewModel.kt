@@ -30,7 +30,6 @@ class UsuarioViewModel(application: Application): AndroidViewModel(application) 
     fun iniciarSesion(nombre: String, contrasenya: String){
         viewModelScope.launch(Dispatchers.IO) {
             sesionUsuarioLD.postValue(repository.iniciarSesion(nombre, contrasenya))
-
         }
     }
 

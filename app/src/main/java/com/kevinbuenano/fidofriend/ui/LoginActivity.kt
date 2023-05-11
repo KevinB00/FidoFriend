@@ -16,13 +16,15 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var usuarioViewModel: UsuarioViewModel
     lateinit var nombre: String
     lateinit var contrasenya: String
-    lateinit var usuario_nombre: UsuarioEntity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
         usuarioViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))[UsuarioViewModel::class.java]
-        usuarioViewModel.sesionUsuarioLD.observe(this@LoginActivity){usuario ->
-            usuario_nombre = usuario
+        usuarioViewModel.sesionUsuarioLD.observe(this){usuario ->
+            val usuario_nombre = usuario.nombre
+            val intent = Intent(this, MenuActivity::class.java).putExtra("nombreUsuario", usuario_nombre)
+            startActivity(intent)
+            finish()
         }
        /* val factory = ViewModelProvider.AndroidViewModelFactory(application)*/
         /*usuarioViewModel = factory.create(UsuarioViewModel::class.java, CreationExtras.Empty)*/
@@ -40,9 +42,6 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Rellene los datos!", Toast.LENGTH_LONG).show()
                 }else {
                     usuarioViewModel.iniciarSesion(nombre, contrasenya)
-                    val intent = Intent(this, MenuActivity::class.java).putExtra("nombreUsuario", usuario_nombre.nombre)
-                    startActivity(intent)
-                    finish()
                 }
             }catch (e: Exception){
                 Toast.makeText(this, "Compruebe los datos introducidos", Toast.LENGTH_LONG).show()
