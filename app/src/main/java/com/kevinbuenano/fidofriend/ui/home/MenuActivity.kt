@@ -26,6 +26,17 @@ class MenuActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
+
+
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.homeFragment
+        ),
+        binding.menuLayout
+            )
+
+        NavigationUI.setupWithNavController(binding.navView, navController)
+        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
+
         try {
             val viewModelProvider = ViewModelProvider(
                 navController.getViewModelStoreOwner(R.id.menu_graph_xml),
@@ -37,16 +48,6 @@ class MenuActivity : AppCompatActivity() {
         }catch (e: IllegalArgumentException){
             e.printStackTrace()
         }
-
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.homeFragment
-        ),
-        binding.menuLayout
-            )
-
-        NavigationUI.setupWithNavController(binding.navView, navController)
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
-
         var nombreUsuario = intent.getStringExtra("nombreUsuario")
         val bundle = Bundle();
         bundle.putString("nombreUsuario", nombreUsuario );
