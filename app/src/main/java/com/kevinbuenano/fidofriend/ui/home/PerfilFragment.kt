@@ -6,12 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.kevinbuenano.fidofriend.R
-import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
-import com.kevinbuenano.fidofriend.database.viewmodel.MascotaViewModel
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
 
@@ -26,19 +22,20 @@ import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
  */
 class PerfilFragment : Fragment() {
     lateinit var binding: FragmentPerfilBinding
-    lateinit var usuarioViewModel: UsuarioViewModel
+    private val usuarioViewModel: UsuarioViewModel by navGraphViewModels(R.id.menu_graph)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
        binding = FragmentPerfilBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        usuarioViewModel = (requireActivity() as MenuActivity).getUsuarioViewModel()
         usuarioViewModel.updateUsuarioLD.observe(viewLifecycleOwner) {
             if (it == null) {
                 Toast.makeText(
@@ -121,3 +118,4 @@ class PerfilFragment : Fragment() {
     }
 
 }
+

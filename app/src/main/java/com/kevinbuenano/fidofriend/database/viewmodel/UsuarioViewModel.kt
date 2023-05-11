@@ -14,8 +14,6 @@ import kotlinx.coroutines.launch
 class UsuarioViewModel(application: Application): AndroidViewModel(application) {
     val repository: usuarioRepository
     val context = application
-
-
     init {
         val db= appDatabase.getDatabase(application)
         val usuarioDAO = db.usuarioDao()

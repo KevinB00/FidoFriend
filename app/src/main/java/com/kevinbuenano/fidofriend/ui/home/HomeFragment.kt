@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,16 +18,17 @@ import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.FragmentHomeBinding
 import com.kevinbuenano.fidofriend.ui.newPet.NuevaMascota
 
-
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     lateinit var recyclerView: RecyclerView
     var mascotas: MutableList<MascotaEntity> = mutableListOf()
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
-    lateinit var usuarioViewModel: UsuarioViewModel
-    lateinit var mascotaViewModel: MascotaViewModel
     private var nombreUsuario: String? = null
+    private val usuarioViewModel: UsuarioViewModel by navGraphViewModels(R.id.menu_graph)
+    private val mascotaViewModel: MascotaViewModel by navGraphViewModels(R.id.menu_graph)
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,17 +41,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        usuarioViewModel = (requireActivity() as MenuActivity).getUsuarioViewModel()
-        mascotaViewModel = (requireActivity() as MenuActivity).getMascotaViewModel()
-
-
-        arguments?.let {
-            nombreUsuario = it.getString("nombreUsuario")
-        }
         nombreUsuario?.let { usuarioViewModel.getUsuarioByName(it) }
-        cargarPerros()
-        cargarGatos()
+        cargarPerros(mascotaViewModel)
+        cargarGatos(mascotaViewModel)
         mascotaViewModel.tipoMascotaLD.observe(viewLifecycleOwner){
             mascotas.clear()
             mascotas.addAll(it)
@@ -70,12 +61,12 @@ class HomeFragment : Fragment() {
         requireActivity().title = "Inicio"
     }
 
-    private fun cargarGatos() {
+    private fun cargarGatos(mascotaViewModel: MascotaViewModel) {
         mascotaViewModel.getPerroGato(2)
         setUpRecyclerViewGato()
     }
 
-    private fun cargarPerros() {
+    private fun cargarPerros(mascotaViewModel: MascotaViewModel) {
         mascotaViewModel.getPerroGato(1)
         setUpRecyclerViewPerro()
     }

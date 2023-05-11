@@ -1,9 +1,7 @@
 package com.kevinbuenano.fidofriend.ui.home
 
-import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -11,6 +9,7 @@ import com.kevinbuenano.fidofriend.R
 import com.kevinbuenano.fidofriend.database.viewmodel.MascotaViewModel
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
 import com.kevinbuenano.fidofriend.databinding.ActivityMenuBinding
+
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -22,22 +21,26 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMenuBinding.inflate(layoutInflater).also { binding = it }.root)
 
-        setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
-
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.menu_graph)
 
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.homeFragment
+            R.id.homeFragment,
+            R.id.perfilFragment
         ),
         binding.menuLayout
             )
 
+        setSupportActionBar(binding.toolbar)
         NavigationUI.setupWithNavController(binding.navView, navController)
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
 
-        try {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            supportActionBar?.title = destination.label
+        }
+        /*try {
             val viewModelProvider = ViewModelProvider(
                 navController.getViewModelStoreOwner(R.id.menu_graph_xml),
                 ViewModelProvider.AndroidViewModelFactory(application)
@@ -47,14 +50,13 @@ class MenuActivity : AppCompatActivity() {
 
         }catch (e: IllegalArgumentException){
             e.printStackTrace()
-        }
+        }*/
         var nombreUsuario = intent.getStringExtra("nombreUsuario")
         val bundle = Bundle();
         bundle.putString("nombreUsuario", nombreUsuario );
         val homeFragment = HomeFragment();
         homeFragment.arguments = bundle;
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, homeFragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, homeFragment).commit()
 
     }
 
@@ -65,5 +67,6 @@ class MenuActivity : AppCompatActivity() {
     fun getMascotaViewModel(): MascotaViewModel{
         return mascotaViewModel
     }
+
 
 }
