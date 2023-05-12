@@ -1,25 +1,27 @@
 package com.kevinbuenano.fidofriend.ui
 
-import android.app.Application
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
-import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
+import com.kevinbuenano.fidofriend.database.repository.usuarioRepository
 import com.kevinbuenano.fidofriend.databinding.ActivityRegistroBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegistroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistroBinding
-    private lateinit var usuarioViewModel: UsuarioViewModel
     private lateinit var usuarioNuevo: UsuarioEntity
+    private lateinit var bd: appDatabase
+    private lateinit var repository: usuarioRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityRegistroBinding.inflate(layoutInflater).also { binding = it }.root)
 
-        val application: Application = application as Application
-        usuarioViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))[UsuarioViewModel::class.java]
-
+        bd = appDatabase.getDatabase(applicationContext)
+        repository = usuarioRepository(bd.usuarioDao())
         //Cuando se pulse el botón se realizarán los pasos necesarios para añadir el usuario a la base de datos.
         binding.btnRegistrar.setOnClickListener {
             try {
@@ -34,7 +36,7 @@ class RegistroActivity : AppCompatActivity() {
                     addUsuario()
                     finish()
                 } else {
-                    Toast.makeText(applicationContext, "Introduzca los datos!", Toast.LENGTH_LONG)
+                    Toast.makeText(this, "Introduzca los datos!", Toast.LENGTH_LONG)
                         .show()
                 }
             } catch (e: Exception) {
@@ -49,8 +51,10 @@ class RegistroActivity : AppCompatActivity() {
 
     //Registrar Usuario
     private fun addUsuario() {
-        usuarioViewModel.add(usuarioNuevo)
-        Toast.makeText(applicationContext, "Usuario registrado!", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch(Dispatchers.IO) {
+            repository.addUsuario(usuarioNuevo)
+        }
+        Toast.makeText(this, "Usuario registrado!", Toast.LENGTH_SHORT).show()
 
     }
 
