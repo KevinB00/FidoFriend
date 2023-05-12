@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.navGraphViewModels
 import com.kevinbuenano.fidofriend.R
 import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
@@ -22,14 +23,13 @@ import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
  */
 class PerfilFragment : Fragment() {
     lateinit var binding: FragmentPerfilBinding
-    private val usuarioViewModel: UsuarioViewModel by navGraphViewModels(R.id.menu_graph)
+    private val usuarioViewModel: UsuarioViewModel by activityViewModels<UsuarioViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
        binding = FragmentPerfilBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 

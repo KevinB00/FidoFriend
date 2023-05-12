@@ -1,5 +1,6 @@
 package com.kevinbuenano.fidofriend.ui
 
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
+        val application: Application = application as Application
         usuarioViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))[UsuarioViewModel::class.java]
         usuarioViewModel.sesionUsuarioLD.observe(this){usuario ->
             val usuario_nombre = usuario.nombre

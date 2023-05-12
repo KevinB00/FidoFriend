@@ -1,5 +1,6 @@
 package com.kevinbuenano.fidofriend.ui
 
+import android.app.Application
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ class RegistroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(ActivityRegistroBinding.inflate(layoutInflater).also { binding = it }.root)
 
+        val application: Application = application as Application
         usuarioViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))[UsuarioViewModel::class.java]
 
         //Cuando se pulse el botón se realizarán los pasos necesarios para añadir el usuario a la base de datos.
@@ -40,7 +42,7 @@ class RegistroActivity : AppCompatActivity() {
                     applicationContext,
                     "Los datos ya están registrados",
                     Toast.LENGTH_LONG
-                )
+                ).show()
             }
         }
     }

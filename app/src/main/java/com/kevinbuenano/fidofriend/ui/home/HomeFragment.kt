@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,8 +26,8 @@ class HomeFragment : Fragment() {
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
     private var nombreUsuario: String? = null
-    private val usuarioViewModel: UsuarioViewModel by navGraphViewModels(R.id.menu_graph)
-    private val mascotaViewModel: MascotaViewModel by navGraphViewModels(R.id.menu_graph)
+    private val usuarioViewModel: UsuarioViewModel by activityViewModels<UsuarioViewModel>()
+    private val mascotaViewModel: MascotaViewModel by activityViewModels<MascotaViewModel>()
 
 
 
