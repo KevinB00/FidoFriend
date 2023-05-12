@@ -1,16 +1,20 @@
 package com.kevinbuenano.fidofriend.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.navGraphViewModels
-import com.kevinbuenano.fidofriend.R
-import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
+import androidx.lifecycle.lifecycleScope
+import com.kevinbuenano.fidofriend.database.appDatabase
+import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
+import com.kevinbuenano.fidofriend.database.repository.usuarioRepository
 import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,8 +27,10 @@ import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
  */
 class PerfilFragment : Fragment() {
     lateinit var binding: FragmentPerfilBinding
-    private val usuarioViewModel: UsuarioViewModel by activityViewModels<UsuarioViewModel>()
-
+    lateinit var usuarioRepository: usuarioRepository
+    lateinit var db: appDatabase
+    lateinit var usuarioEntity: UsuarioEntity
+    lateinit var nombre: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,26 +42,35 @@ class PerfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        usuarioViewModel.updateUsuarioLD.observe(viewLifecycleOwner) {
-            if (it == null) {
-                Toast.makeText(
-                    requireContext(),
-                    "El dato introducido no es válido",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                usuarioViewModel.sesionUsuarioLD.value = it
-            }
+        val usuario = activity?.getSharedPreferences("com.kevinbuenano.fidofriend", Context.MODE_PRIVATE)
+        nombre = usuario?.getString("nombre", "").toString()
+        val menuActivity = activity as? MenuActivity
+        if (menuActivity != null) {
+            db = menuActivity.getDB()
         }
+        usuarioRepository = usuarioRepository(db.usuarioDao())
+
+        obtenerUsuario()
 
         binding.btnNombre.setOnClickListener {
             try {
                 var cambioNombre = binding.editNombre.text.toString()
-                usuarioViewModel.sesionUsuarioLD.value?.nombre = cambioNombre
-                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
-                    usuarioViewModel.updateUsuario(
-                        it1
-                    )
+                usuarioEntity.nombre = cambioNombre
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val result = withContext(Dispatchers.IO){
+                        usuarioRepository.updateUsuario(usuarioEntity)
+                    }
+                    if (result == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            "El dato introducido no es válido",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        obtenerUsuario()
+                    }else{
+                            val editor = usuario?.edit()
+                            editor?.putString("nombre", usuarioEntity.nombre)
+                        }
                 }
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
@@ -64,12 +79,22 @@ class PerfilFragment : Fragment() {
         binding.btnContrasenya.setOnClickListener {
             try {
                 var cambioContrasenya = binding.editContrasenya.text.toString()
-                usuarioViewModel.sesionUsuarioLD.value?.contrasenya = cambioContrasenya
-
-                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
-                    usuarioViewModel.updateUsuario(
-                        it1
-                    )
+                usuarioEntity.contrasenya = cambioContrasenya
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val result = withContext(Dispatchers.IO) {
+                        usuarioRepository.updateUsuario(usuarioEntity)
+                    }
+                    if (result == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            "El dato introducido no es válido",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        obtenerUsuario()
+                    }else{
+                        val editor = usuario?.edit()
+                        editor?.putString("contrasenya", usuarioEntity.contrasenya)
+                    }
                 }
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
@@ -78,13 +103,8 @@ class PerfilFragment : Fragment() {
         binding.btnEmail.setOnClickListener {
             try {
                 var cambioEmail = binding.editEmail.text.toString()
-                usuarioViewModel.sesionUsuarioLD.value?.email = cambioEmail
-
-                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
-                    usuarioViewModel.updateUsuario(
-                        it1
-                    )
-                }
+                usuarioEntity.email = cambioEmail
+                resultado()
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -92,27 +112,47 @@ class PerfilFragment : Fragment() {
         binding.btnLocalidad.setOnClickListener {
             try {
                 var cambioLocalidad = binding.editLocalidad.text.toString()
-                usuarioViewModel.sesionUsuarioLD.value?.localidad = cambioLocalidad
-
-                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
-                    usuarioViewModel.updateUsuario(
-                        it1
-                    )
-                }
+                usuarioEntity.localidad = cambioLocalidad
+                resultado()
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
         }
         binding.btnBorrarCuenta.setOnClickListener {
             try {
-                usuarioViewModel.sesionUsuarioLD.value?.let { it1 ->
-                    usuarioViewModel.deleteUsuario(
-                        it1
-                    )
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val result = withContext(Dispatchers.IO){
+                        usuarioRepository.removeUsuario(usuarioEntity)
+                    }
                 }
             }catch (e: Exception) {
-                Toast.makeText(requireContext(), "Pruebe más tarde", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Error borrando tarea", Toast.LENGTH_LONG).show()
 
+            }
+        }
+    }
+
+    private fun obtenerUsuario() {
+        if (nombre != null) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            usuarioEntity = withContext(Dispatchers.IO){
+                    usuarioRepository.getUsuarioByName(nombre)
+                }
+            }
+        }
+    }
+    private fun resultado() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                usuarioRepository.updateUsuario(usuarioEntity)
+            }
+            if (result == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "El dato introducido no es válido",
+                    Toast.LENGTH_LONG
+                ).show()
+                obtenerUsuario()
             }
         }
     }

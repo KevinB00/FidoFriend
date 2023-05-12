@@ -6,30 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.navGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kevinbuenano.fidofriend.R
 import com.kevinbuenano.fidofriend.adapters.GatoAdapter
 import com.kevinbuenano.fidofriend.adapters.PerroAdapter
+import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
-import com.kevinbuenano.fidofriend.database.viewmodel.MascotaViewModel
-import com.kevinbuenano.fidofriend.database.viewmodel.UsuarioViewModel
+import com.kevinbuenano.fidofriend.database.repository.mascotaRepository
 import com.kevinbuenano.fidofriend.databinding.FragmentHomeBinding
 import com.kevinbuenano.fidofriend.ui.newPet.NuevaMascota
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     lateinit var recyclerView: RecyclerView
-    var mascotas: MutableList<MascotaEntity> = mutableListOf()
+    var perros: MutableList<MascotaEntity> = mutableListOf()
+    var gatos: MutableList<MascotaEntity> = mutableListOf()
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
     private var nombreUsuario: String? = null
-    private val usuarioViewModel: UsuarioViewModel by activityViewModels<UsuarioViewModel>()
-    private val mascotaViewModel: MascotaViewModel by activityViewModels<MascotaViewModel>()
-
-
+    private lateinit var mascotaRepository: mascotaRepository
+    private lateinit var db: appDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,14 +42,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        nombreUsuario?.let { usuarioViewModel.getUsuarioByName(it) }
-        cargarPerros(mascotaViewModel)
-        cargarGatos(mascotaViewModel)
-        mascotaViewModel.tipoMascotaLD.observe(viewLifecycleOwner){
-            mascotas.clear()
-            mascotas.addAll(it)
+        val menuActivity = activity as? MenuActivity
 
+        if (menuActivity != null) {
+            db = menuActivity.getDB()
         }
+
+        mascotaRepository = mascotaRepository(db.mascotaDao())
+
+        cargarPerros()
+        cargarGatos()
+        mascotaRepository = mascotaRepository(db.mascotaDao())
 
         binding.floatingActionButton.setOnClickListener {
             var intent:Intent = Intent(activity, NuevaMascota::class.java)
@@ -62,19 +65,27 @@ class HomeFragment : Fragment() {
         requireActivity().title = "Inicio"
     }
 
-    private fun cargarGatos(mascotaViewModel: MascotaViewModel) {
-        mascotaViewModel.getPerroGato(2)
+    private fun cargarGatos() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            gatos = withContext(Dispatchers.IO) {
+                mascotaRepository.getPerroGato(2)
+            }
+        }
         setUpRecyclerViewGato()
     }
 
-    private fun cargarPerros(mascotaViewModel: MascotaViewModel) {
-        mascotaViewModel.getPerroGato(1)
+    private fun cargarPerros() {
+        viewLifecycleOwner.lifecycleScope.launch {
+           perros = withContext(Dispatchers.IO) {
+               mascotaRepository.getPerroGato(1)
+           }
+        }
         setUpRecyclerViewPerro()
     }
 
     private fun setUpRecyclerViewGato() {
-        if (mascotas.isNotEmpty()){
-            binding.recyclerGatos.adapter = PerroAdapter(mascotas)
+        if (gatos.isNotEmpty()){
+            binding.recyclerGatos.adapter = GatoAdapter(gatos)
             recyclerView = binding.recyclerGatos
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
@@ -83,8 +94,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpRecyclerViewPerro() {
-        if (mascotas.isNotEmpty()){
-            binding.recyclerPerros.adapter = PerroAdapter(mascotas)
+        if (perros.isNotEmpty()){
+            binding.recyclerPerros.adapter = PerroAdapter(perros)
             recyclerView = binding.recyclerPerros
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
