@@ -1,12 +1,14 @@
 package com.kevinbuenano.fidofriend.ui.newPet
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.kevinbuenano.fidofriend.R
+import androidx.appcompat.app.AppCompatActivity
+import com.kevinbuenano.fidofriend.databinding.ActivityNuevaMascotaBinding
 
 class NuevaMascota : AppCompatActivity() {
+    private lateinit var binding: ActivityNuevaMascotaBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nueva_mascota)
+        setContentView(ActivityNuevaMascotaBinding.inflate(layoutInflater).also { binding = it }.root)
+
     }
 }

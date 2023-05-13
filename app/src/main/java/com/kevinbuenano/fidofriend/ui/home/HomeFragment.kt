@@ -52,17 +52,14 @@ class HomeFragment : Fragment() {
 
         cargarPerros()
         cargarGatos()
-        mascotaRepository = mascotaRepository(db.mascotaDao())
 
+        adapterPerro = PerroAdapter(perros)
+        adapterGato = GatoAdapter(gatos)
         binding.floatingActionButton.setOnClickListener {
             var intent:Intent = Intent(activity, NuevaMascota::class.java)
+            startActivity(intent)
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireActivity().title = "Inicio"
     }
 
     private fun cargarGatos() {

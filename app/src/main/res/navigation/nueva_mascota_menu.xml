@@ -16,7 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/datosMascotaFragment"
-        android:name="com.kevinbuenano.fidofriend.DatosMascotaFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.newPet.DatosMascotaFragment"
         android:label="fragment_datos_mascota"
-        tools:layout="@layout/fragment_datos_mascota" />
+        tools:layout="@layout/fragment_datos_mascota" >
+        <argument
+            android:name="tipoAnimal"
+            app:argType="integer" />
+    </fragment>
 </navigation>

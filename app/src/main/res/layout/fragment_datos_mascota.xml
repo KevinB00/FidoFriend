@@ -1,14 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DatosMascotaFragment">
+    tools:context=".ui.newPet.DatosMascotaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tViewInfoMascota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Datos Mascota"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/edTextNombre"
+        android:layout_width="248dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="90dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewInfoMascota"
+        app:layout_constraintBottom_toTopOf="@id/editTextFecha"/>
+
+    <EditText
+        android:id="@+id/editTextFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:ems="10"
+        android:inputType="date"
+        android:text="Fecha de Nacimiento"
+        app:layout_constraintBottom_toTopOf="@+id/edTextPeso"
+        app:layout_constraintStart_toStartOf="@+id/edTextNombre"
+        app:layout_constraintTop_toBottomOf="@+id/edTextNombre" />
+
+    <EditText
+        android:id="@+id/edTextPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="Peso"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerEstado"
+        app:layout_constraintStart_toStartOf="@+id/editTextFecha"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFecha" />
+
+    <Spinner
+        android:id="@+id/spinnerEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerActividad"
+        app:layout_constraintStart_toStartOf="@id/edTextPeso"
+        app:layout_constraintTop_toBottomOf="@id/edTextPeso" />
+
+    <Spinner
+        android:id="@+id/spinnerActividad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/eTextRaza"
+        app:layout_constraintStart_toStartOf="@id/spinnerEstado"
+        app:layout_constraintTop_toBottomOf="@id/spinnerEstado" />
+
+    <EditText
+        android:id="@+id/eTextRaza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Raza"
+        app:layout_constraintBottom_toTopOf="@+id/btnAnyadir"
+        app:layout_constraintStart_toStartOf="@+id/spinnerActividad"
+        app:layout_constraintTop_toBottomOf="@id/spinnerActividad" />
+
+    <Button
+        android:id="@+id/btnAnyadir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="Añadir"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eTextRaza" />
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#D61212"
+        android:text="Cancelar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
