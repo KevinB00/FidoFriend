@@ -90,7 +90,7 @@ class DatosMascotaFragment : Fragment() {
             fechaNacimiento = LocalDate.of(year, month + 1, dayOfMonth)
 
             // Actualiza el texto del EditText con la fecha seleccionada
-            val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            val formato = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             fechaNacimientoString = fechaNacimiento?.format(formato)
             binding.editTextFecha.setText(fechaNacimiento?.format(formato))
 
@@ -186,11 +186,9 @@ class DatosMascotaFragment : Fragment() {
     }
 
     private fun obtenerUsuario() {
-        if (nombre != null) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                usuarioEntity = withContext(Dispatchers.IO){
-                    usuarioRepository.getUsuarioByName(nombre)
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            usuarioEntity = withContext(Dispatchers.IO){
+                usuarioRepository.getUsuarioByName(nombre)
             }
         }
     }

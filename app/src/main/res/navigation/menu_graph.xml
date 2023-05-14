@@ -13,9 +13,9 @@
         tools:layout="@layout/fragment_perfil" />
     <fragment
         android:id="@+id/calendarioFragment"
-        android:name="com.kevinbuenano.fidofriend.ui.home.CalendarioFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.home.RecordatoriosFragment"
         android:label="Calendario"
-        tools:layout="@layout/fragment_calendario" />
+        tools:layout="@layout/fragment_recordatorios" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.kevinbuenano.fidofriend.ui.home.HomeFragment"

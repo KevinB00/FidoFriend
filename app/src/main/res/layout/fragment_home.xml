@@ -38,7 +38,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPerros"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </HorizontalScrollView>
@@ -73,7 +74,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerGatos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </HorizontalScrollView>
 

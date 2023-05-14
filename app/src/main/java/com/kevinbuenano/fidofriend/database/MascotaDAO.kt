@@ -27,8 +27,8 @@ interface MascotaDAO {
     fun getMascotaById(id: Int): MascotaEntity
 
     //Obtener listado de perros/gatos
-    @Query(value = "SELECT * FROM mascota WHERE perroGato LIKE :tipoMascota")
-    fun getPerroGato(tipoMascota: Int): MutableList<MascotaEntity>
+    @Query(value = "SELECT * FROM mascota WHERE perroGato LIKE :tipoMascota AND usuario_id = :id")
+    fun getPerroGato(tipoMascota: Int, id: Int): MutableList<MascotaEntity>
 
     @Update
     suspend fun updateMascota(mascota: MascotaEntity): Int

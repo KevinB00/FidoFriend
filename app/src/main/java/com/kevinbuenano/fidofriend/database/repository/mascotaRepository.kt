@@ -9,5 +9,5 @@ class mascotaRepository(private val mascotaDAO: MascotaDAO){
     suspend fun updateMascota(mascota: MascotaEntity) = mascotaDAO.updateMascota(mascota)
 
     suspend fun removeMascota(mascota: MascotaEntity) = mascotaDAO.deleteMascota(mascota)
-    suspend fun getPerroGato(tipoMascota: Int) = mascotaDAO.getPerroGato(tipoMascota)
+    suspend fun getPerroGato(tipoMascota: Int, id: Int) = mascotaDAO.getPerroGato(tipoMascota, id)
 }

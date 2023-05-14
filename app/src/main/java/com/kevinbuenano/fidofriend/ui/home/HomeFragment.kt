@@ -1,5 +1,6 @@
 package com.kevinbuenano.fidofriend.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +14,11 @@ import com.kevinbuenano.fidofriend.adapters.GatoAdapter
 import com.kevinbuenano.fidofriend.adapters.PerroAdapter
 import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
+import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.repository.mascotaRepository
+import com.kevinbuenano.fidofriend.database.repository.usuarioRepository
 import com.kevinbuenano.fidofriend.databinding.FragmentHomeBinding
+import com.kevinbuenano.fidofriend.ui.mascota.MascotaActivity
 import com.kevinbuenano.fidofriend.ui.newPet.NuevaMascota
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,9 +31,11 @@ class HomeFragment : Fragment() {
     var gatos: MutableList<MascotaEntity> = mutableListOf()
     lateinit var adapterPerro: PerroAdapter
     lateinit var adapterGato: GatoAdapter
-    private var nombreUsuario: String? = null
     private lateinit var mascotaRepository: mascotaRepository
+    private lateinit var usuarioRepository: usuarioRepository
     private lateinit var db: appDatabase
+    private lateinit var nombre: String
+    private lateinit var usuarioEntity: UsuarioEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,19 +48,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val usuario = activity?.getSharedPreferences("com.kevinbuenano.fidofriend", Context.MODE_PRIVATE)
+        nombre = usuario?.getString("nombre", "").toString()
         val menuActivity = activity as? MenuActivity
 
         if (menuActivity != null) {
             db = menuActivity.getDB()
         }
-
+        usuarioRepository = usuarioRepository(db.usuarioDao())
         mascotaRepository = mascotaRepository(db.mascotaDao())
+        cargar(nombre)
 
-        cargarPerros()
-        cargarGatos()
-
-        adapterPerro = PerroAdapter(perros)
-        adapterGato = GatoAdapter(gatos)
         binding.floatingActionButton.setOnClickListener {
             var intent:Intent = Intent(activity, NuevaMascota::class.java)
             startActivity(intent)
@@ -62,40 +66,47 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun cargarGatos() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            gatos = withContext(Dispatchers.IO) {
-                mascotaRepository.getPerroGato(2)
-            }
-        }
-        setUpRecyclerViewGato()
+    override fun onResume() {
+        super.onResume()
+        cargar(nombre)
     }
 
-    private fun cargarPerros() {
+    private fun cargar(nombre: String) {
         viewLifecycleOwner.lifecycleScope.launch {
-           perros = withContext(Dispatchers.IO) {
-               mascotaRepository.getPerroGato(1)
-           }
+            withContext(Dispatchers.IO) {
+                usuarioEntity = usuarioRepository.getUsuarioByName(nombre)
+                gatos = mascotaRepository.getPerroGato(2, usuarioEntity.id)
+                perros = mascotaRepository.getPerroGato(1, usuarioEntity.id)
+            }
+            setUpRecyclerViewGato()
+            setUpRecyclerViewPerro()
         }
-        setUpRecyclerViewPerro()
     }
 
     private fun setUpRecyclerViewGato() {
         if (gatos.isNotEmpty()){
-            binding.recyclerGatos.adapter = GatoAdapter(gatos)
+            adapterGato = GatoAdapter(gatos,
+            ) {
+                var intent = Intent(activity, MascotaActivity::class.java).putExtra("idMascota", it.id_mascota)
+                startActivity(intent)
+            }
             recyclerView = binding.recyclerGatos
             recyclerView.setHasFixedSize(true)
-            recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+            recyclerView.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapterGato
         }
     }
 
     private fun setUpRecyclerViewPerro() {
         if (perros.isNotEmpty()){
-            binding.recyclerPerros.adapter = PerroAdapter(perros)
+            adapterPerro = PerroAdapter(perros
+            ) {
+                var intent = Intent(activity, MascotaActivity::class.java).putExtra("idMascota", it.id_mascota)
+                startActivity(intent)
+            }
             recyclerView = binding.recyclerPerros
             recyclerView.setHasFixedSize(true)
-            recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+            recyclerView.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapterPerro
         }
     }
