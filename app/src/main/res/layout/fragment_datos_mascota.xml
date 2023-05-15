@@ -67,17 +67,14 @@
         android:id="@+id/spinnerActividad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/eTextRaza"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerTamanyo"
         app:layout_constraintStart_toStartOf="@id/spinnerEstado"
         app:layout_constraintTop_toBottomOf="@id/spinnerEstado" />
 
-    <EditText
-        android:id="@+id/eTextRaza"
+    <Spinner
+        android:id="@+id/spinnerTamanyo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Raza"
         app:layout_constraintBottom_toTopOf="@+id/btnAnyadir"
         app:layout_constraintStart_toStartOf="@+id/spinnerActividad"
         app:layout_constraintTop_toBottomOf="@id/spinnerActividad" />
@@ -91,7 +88,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnCancelar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTextRaza" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTamanyo" />
 
     <Button
         android:id="@+id/btnCancelar"

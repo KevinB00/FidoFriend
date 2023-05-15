@@ -1,7 +1,11 @@
 package com.kevinbuenano.fidofriend.database.entities
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "mascota",
         foreignKeys = [ForeignKey(
@@ -33,8 +37,8 @@ data class MascotaEntity(
     var edad: Int,
     @ColumnInfo(name = "actividad")
     var actividad: String,
-    @ColumnInfo(name = "raza")
-    var raza: String,
+    @ColumnInfo(name = "porte")
+    var porte: String,
     @ColumnInfo(name = "perroGato")
     var perroGato: Int,
     @ColumnInfo(name = "usuario_id")

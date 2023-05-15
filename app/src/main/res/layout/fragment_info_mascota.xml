@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textColor="#3F51B5"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,18 +24,154 @@
         android:id="@+id/tViewComida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
+        android:layout_marginTop="40dp"
+        android:text="Comida(g)"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tViewGramos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tViewNombreMascota" />
 
-    <EditText
-        android:id="@+id/editTextNumber"
+    <TextView
+        android:id="@+id/tViewGramos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tViewVeces"
         app:layout_constraintStart_toEndOf="@+id/tViewComida"
-        app:layout_constraintTop_toTopOf="@+id/tViewComida" />
+        app:layout_constraintTop_toTopOf="@+id/tViewComida"
+        tools:text="200" />
+
+    <TextView
+        android:id="@+id/tViewVeces"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="Veces"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tViewNumero"
+        app:layout_constraintStart_toEndOf="@+id/tViewGramos"
+        app:layout_constraintTop_toTopOf="@+id/tViewGramos" />
+
+    <TextView
+        android:id="@+id/tViewNumero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginEnd="48dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewVeces"
+        app:layout_constraintTop_toTopOf="@+id/tViewVeces"
+        tools:text="3" />
+
+    <TextView
+        android:id="@+id/tViewPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Peso"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tViewNumeroPeso"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewComida" />
+
+    <TextView
+        android:id="@+id/tViewNumeroPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="250dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewPeso"
+        app:layout_constraintTop_toTopOf="@+id/tViewPeso"
+        tools:text="20 Kg" />
+
+    <TextView
+        android:id="@+id/tViewDiferenciaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Diferencia del mes pasado"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tViewDifNum"
+        app:layout_constraintStart_toStartOf="@+id/tViewPeso"
+        app:layout_constraintTop_toBottomOf="@+id/tViewPeso" />
+
+    <TextView
+        android:id="@+id/tViewDifNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewDiferenciaText"
+        app:layout_constraintTop_toTopOf="@+id/tViewDiferenciaText"
+        tools:text="+4" />
+
+    <TextView
+        android:id="@+id/tViewActividad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/tViewDiferenciaText"
+        app:layout_constraintTop_toBottomOf="@+id/tViewDiferenciaText"
+        tools:text="Actividad" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="200dp"
+        android:src="@drawable/cara_feliz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewActividad"
+        app:layout_constraintTop_toTopOf="@+id/tViewActividad" />
+
+    <TextView
+        android:id="@+id/tViewPaseo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="Paseo"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tViewNumPaseo"
+        app:layout_constraintStart_toStartOf="@+id/tViewActividad"
+        app:layout_constraintTop_toBottomOf="@+id/tViewActividad" />
+
+    <TextView
+        android:id="@+id/tViewNumPaseo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="210dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewPaseo"
+        app:layout_constraintTop_toTopOf="@+id/tViewPaseo"
+        tools:text="3 veces" />
+
+    <TextView
+        android:id="@+id/tViewEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="299dp" />
+
+    <TextView
+        android:id="@+id/tViewEdad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edad"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="368dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

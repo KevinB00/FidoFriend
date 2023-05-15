@@ -45,8 +45,10 @@ class DatosMascotaFragment : Fragment() {
     private var fechaNacimientoString: String? = null
     val opciones = arrayOf("Sano", "Enfermo", "Sin revisión", "Obeso", "Cachorro")
     val actividad = arrayOf("Muy activo", "Sedentario", "Moderado")
+    val tamanyo = arrayOf("Pequeño", "Mediano", "Grande")
     var actividadMascota: String? = null
     private var estado: String? = null
+    var tamanyoMascota: String? = null
     var edad:Int = 0
     private lateinit var db: appDatabase
     lateinit var usuarioEntity: UsuarioEntity
@@ -68,6 +70,10 @@ class DatosMascotaFragment : Fragment() {
         val spinnerActividad = binding.spinnerActividad
         val adapterActividad = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, actividad)
         spinnerActividad.adapter = adapterActividad
+
+        val spinnerTamanyo = binding.spinnerTamanyo
+        val adapterTamanyo = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, tamanyo)
+        spinnerTamanyo.adapter = adapterTamanyo
 
         return binding.root
     }
@@ -146,6 +152,20 @@ class DatosMascotaFragment : Fragment() {
             }
 
         }
+        binding.spinnerTamanyo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ){
+                tamanyoMascota = tamanyo[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Toast.makeText(requireContext(), "Eliga el tamaño de su mascota", Toast.LENGTH_LONG).show()
+            }
+        }
         binding.btnAnyadir.setOnClickListener {
             anyadirMascota()
         }
@@ -157,7 +177,7 @@ class DatosMascotaFragment : Fragment() {
 
     private fun anyadirMascota() {
         try {
-            if (fechaNacimientoString != null || binding.edTextPeso.text.isNotEmpty() || estado != null || actividadMascota != null) {
+            if (fechaNacimientoString != null || binding.edTextPeso.text.isNotEmpty() || estado != null || actividadMascota != null || tamanyoMascota != null) {
                 val mascota = MascotaEntity(
                     id_mascota = 0,
                     binding.edTextNombre.text.toString(),
@@ -166,7 +186,7 @@ class DatosMascotaFragment : Fragment() {
                     estado!!,
                     edad,
                     actividadMascota!!,
-                    binding.eTextRaza.text.toString(),
+                    tamanyoMascota!!,
                     tipoAnimal,
                     usuarioEntity.id
                 )
