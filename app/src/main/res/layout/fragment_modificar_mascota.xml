@@ -1,14 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mascota.ModificarMascotaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tViewPesoMod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="290dp"
+        android:text="Peso: "
+        app:layout_constraintBottom_toTopOf="@+id/seekPeso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <SeekBar
+        android:id="@+id/seekPeso"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="13"
+        android:progress="1"
+        app:layout_constraintTop_toBottomOf="@+id/tViewPesoMod" />
+
+    <TextView
+        android:id="@+id/tViewPesoMascota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekPeso"
+        app:layout_constraintBottom_toTopOf="@+id/tViewEstadoMod"
+        tools:text="7" />
+
+    <Spinner
+        android:id="@+id/spinnerEstadoMod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewEstadoMod"
+        tools:layout_editor_absoluteY="238dp" />
+
+    <TextView
+        android:id="@+id/tViewEstadoMod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        app:layout_constraintBottom_toTopOf="@+id/tViewActividadMod"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerEstadoMod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewPesoMascota" />
+
+    <TextView
+        android:id="@+id/tViewActividadMod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Actiividad"
+        app:layout_constraintBottom_toTopOf="@+id/tViewPorte"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerActividadMod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewEstadoMod" />
+
+    <Spinner
+        android:id="@+id/spinnerActividadMod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewActividadMod"
+        app:layout_constraintTop_toTopOf="@+id/tViewActividadMod" />
+
+    <TextView
+        android:id="@+id/tViewPorte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Porte"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerPorte"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewActividadMod" />
+
+    <Spinner
+        android:id="@+id/spinnerPorte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewPorte"
+        app:layout_constraintTop_toTopOf="@+id/tViewPorte" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

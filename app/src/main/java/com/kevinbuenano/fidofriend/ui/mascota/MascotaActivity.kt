@@ -17,10 +17,12 @@ class MascotaActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var db: appDatabase
+    private var mascotaId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMascotaBinding.inflate(layoutInflater).also { binding = it }.root)
-
+        db = appDatabase.getDatabase(applicationContext)
+        mascotaId = intent.getIntExtra("idMascota", -1)
         setSupportActionBar(binding.toolbar)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.bottom_host_fragment) as NavHostFragment
@@ -46,4 +48,7 @@ class MascotaActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item)
     }
+
+    fun getDB(): appDatabase =  db
+    fun getMascotaId(): Int = mascotaId
 }

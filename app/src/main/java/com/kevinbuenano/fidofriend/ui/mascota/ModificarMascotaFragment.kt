@@ -5,12 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kevinbuenano.fidofriend.R
+import android.widget.ArrayAdapter
+import android.widget.SeekBar
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import com.kevinbuenano.fidofriend.database.appDatabase
+import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
+import com.kevinbuenano.fidofriend.database.repository.mascotaRepository
+import com.kevinbuenano.fidofriend.databinding.FragmentModificarMascotaBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -18,43 +26,69 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ModificarMascotaFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentModificarMascotaBinding
+    private var peso: Float = 0.0f
+    private lateinit var db: appDatabase
+    private lateinit var repository: mascotaRepository
+    private lateinit var mascotaEntity: MascotaEntity
+    val estado = arrayOf("Sano", "Enfermo", "Sin revisión", "Obeso", "Cachorro")
+    val actividad = arrayOf("Muy activo", "Sedentario", "Moderado")
+    private val mascotaEntityLiveData = MutableLiveData<MascotaEntity>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_modificar_mascota, container, false)
+        binding = FragmentModificarMascotaBinding.inflate(inflater, container, false)
+        val spinnerEstado = binding.spinnerEstadoMod
+        val adapterEstado = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, estado)
+        spinnerEstado.adapter = adapterEstado
+        val spinnerActividad = binding.spinnerActividadMod
+        val adapterActiviadad = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, actividad)
+        spinnerActividad.adapter = adapterActiviadad
+     return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ModificarMascotaFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ModificarMascotaFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mascotaActivity = activity as MascotaActivity
+        db = mascotaActivity.getDB()
+        var idMascota = mascotaActivity.getMascotaId()
+        repository = mascotaRepository(db.mascotaDao())
+        cargarMascota(idMascota)
+
+        mascotaEntityLiveData.observe(viewLifecycleOwner) { mascota ->
+            mascotaEntity = mascota
+            binding.seekPeso.progress = mascota.peso.toInt()
+        }
+
+        binding.seekPeso.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                peso = progress.toFloat()
+                binding.tViewPesoMascota.text = peso.toString()
             }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+           }
+        }
+        )
+
+
     }
+
+    private fun cargarMascota(idMascota: Int) {
+      viewLifecycleOwner.lifecycleScope.launch {
+         mascotaEntity = withContext(Dispatchers.IO) {
+             repository.getMascotaById(idMascota)
+         }
+          mascotaEntityLiveData.value = mascotaEntity
+      }
+    }
+
 }
