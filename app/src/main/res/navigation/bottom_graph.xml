@@ -23,5 +23,9 @@
         android:id="@+id/modificarMascotaFragment"
         android:name="com.kevinbuenano.fidofriend.ui.mascota.ModificarMascotaFragment"
         android:label="Modificar"
-        tools:layout="@layout/fragment_modificar_mascota" />
+        tools:layout="@layout/fragment_modificar_mascota" >
+        <action
+            android:id="@+id/action_modificarMascotaFragment_to_infoMascotaFragment"
+            app:destination="@id/infoMascotaFragment" />
+    </fragment>
 </navigation>

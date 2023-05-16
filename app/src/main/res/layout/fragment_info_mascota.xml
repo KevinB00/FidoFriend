@@ -94,7 +94,7 @@
         android:id="@+id/tViewDiferenciaText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Diferencia del mes pasado: "
+        android:text="Diferencia"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tViewActividad"
@@ -106,12 +106,12 @@
         android:id="@+id/tViewDifNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
+        android:layout_marginEnd="200dp"
+        android:text="0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tViewDiferenciaText"
-        app:layout_constraintTop_toTopOf="@+id/tViewDiferenciaText"
-        tools:text="+4" />
+        app:layout_constraintTop_toTopOf="@+id/tViewDiferenciaText" />
 
     <TextView
         android:id="@+id/tViewActividad"
@@ -178,6 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
+        android:layout_marginBottom="20dp"
         android:text="Edad"
         android:textSize="20sp"
         android:textStyle="bold"

@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="290dp"
         android:text="Peso: "
-        app:layout_constraintBottom_toTopOf="@+id/seekPeso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,19 +21,23 @@
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="13"
-        android:progress="1"
+        android:max="26"
+        android:progress="13"
+        app:layout_constraintBottom_toTopOf="@+id/tViewPesoMascota"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tViewPesoMod" />
 
     <TextView
         android:id="@+id/tViewPesoMascota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tViewEstadoMod"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekPeso"
-        app:layout_constraintBottom_toTopOf="@+id/tViewEstadoMod"
         tools:text="7" />
 
     <Spinner
@@ -43,7 +46,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tViewEstadoMod"
-        tools:layout_editor_absoluteY="238dp" />
+        app:layout_constraintTop_toTopOf="@+id/tViewEstadoMod" />
 
     <TextView
         android:id="@+id/tViewEstadoMod"
@@ -77,8 +80,9 @@
         android:id="@+id/tViewPorte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:text="Porte"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnModificar"
         app:layout_constraintEnd_toStartOf="@+id/spinnerPorte"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tViewActividadMod" />
@@ -90,5 +94,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tViewPorte"
         app:layout_constraintTop_toTopOf="@+id/tViewPorte" />
+
+    <Button
+        android:id="@+id/btnModificar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="90dp"
+        android:text="Modificar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewPorte" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
