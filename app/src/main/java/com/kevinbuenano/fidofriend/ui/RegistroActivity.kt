@@ -36,8 +36,7 @@ class RegistroActivity : AppCompatActivity() {
                     addUsuario()
                     finish()
                 } else {
-                    Toast.makeText(this, "Introduzca los datos!", Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(this, "Introduzca los datos!", Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(

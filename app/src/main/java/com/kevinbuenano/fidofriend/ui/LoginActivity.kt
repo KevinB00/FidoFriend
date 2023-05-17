@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.kevinbuenano.fidofriend.database.appDatabase
+import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.repository.usuarioRepository
 import com.kevinbuenano.fidofriend.databinding.ActivityLoginBinding
 import com.kevinbuenano.fidofriend.ui.home.MenuActivity
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var repository: usuarioRepository
     lateinit var nombre: String
     lateinit var contrasenya: String
+    lateinit var result: UsuarioEntity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
@@ -40,19 +42,31 @@ class LoginActivity : AppCompatActivity() {
                 if (nombre.isEmpty() || contrasenya.isEmpty()){
                     Toast.makeText(this, "Rellene los datos!", Toast.LENGTH_LONG).show()
                 }else {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        repository.iniciarSesion(nombre, contrasenya)
-                        with (usuario.edit()){
-                            putString("nombre", nombre)
-                            putString("contrasenya", contrasenya)
-                            apply()
+
+                        lifecycleScope.launch(Dispatchers.IO) {
+
+                            val usuarioEncontrado = repository.iniciarSesion(nombre, contrasenya)
+                            if (usuarioEncontrado != null) {
+                                // El usuario existe en la base de datos y las credenciales son correctas
+                                with(usuario.edit()) {
+                                    putString("nombre", nombre)
+                                    putString("contrasenya", contrasenya)
+                                    apply()
+                                }
+                                val intent = Intent(this@LoginActivity, MenuActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                // El usuario no existe en la base de datos o las credenciales son incorrectas
+                                runOnUiThread {
+                                    Toast.makeText(
+                                        this@LoginActivity,
+                                        "Credenciales incorrectas",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
-
-                    }
-
-                    val intent = Intent(this, MenuActivity::class.java)
-                    startActivity(intent)
-                    finish()
 
                 }
             }catch (e: Exception){

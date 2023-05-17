@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/mostrarMejoraFragment"
-        android:name="com.kevinbuenano.fidofriend.MostrarMejoraFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.mascota.MostrarMejoraFragment"
         android:label="fragment_mostrar_mejora"
         tools:layout="@layout/fragment_mostrar_mejora" />
 </navigation>
