@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MostrarMejoraFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <TextView
+        android:id="@+id/tViewMostrarNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewComidaMostrar"
+        app:layout_constraintTop_toTopOf="@+id/tViewComidaMostrar"
+        tools:text="100" />
+
+    <TextView
+        android:id="@+id/tViewComidaMostrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Comida(g)"
+        app:layout_constraintEnd_toStartOf="@+id/tViewMostrarNum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tViewMostrarPaseos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="250dp"
+        android:text="Paseos"
+        app:layout_constraintBottom_toTopOf="@+id/tViewMostrarActividad"
+        app:layout_constraintEnd_toStartOf="@+id/tViewMostrarInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewComidaMostrar" />
+
+    <TextView
+        android:id="@+id/tViewMostrarInfo"
+        android:layout_width="306dp"
+        android:layout_height="215dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewMostrarPaseos"
+        app:layout_constraintTop_toTopOf="@+id/tViewMostrarPaseos"
+        tools:text="El paseo no es lo suficiente. Tendrías..." />
+
+    <TextView
+        android:id="@+id/tViewMostrarActividad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="300dp"
+        android:text="Actividades"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tViewTextActividad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewMostrarPaseos" />
+
+    <TextView
+        android:id="@+id/tViewTextActividad"
+        android:layout_width="278dp"
+        android:layout_height="163dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewMostrarActividad"
+        app:layout_constraintTop_toTopOf="@+id/tViewMostrarActividad" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

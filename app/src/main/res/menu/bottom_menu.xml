@@ -10,4 +10,9 @@
         android:icon="@drawable/baseline_medication_24"
         android:title="Historial veterinario"/>
 
+    <item
+        android:id="@+id/mejoraMascotaFragment"
+        android:icon="@drawable/baseline_auto_graph_24"
+        android:title="Mejorar"/>
+
 </menu>

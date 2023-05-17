@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mascota.MejoraFragment">
+
+    <TextView
+        android:id="@+id/tViewMejoraComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:text="Comida al día(g)"
+        app:layout_constraintEnd_toStartOf="@+id/eTextComida"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/eTextComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewMejoraComida"
+        app:layout_constraintTop_toTopOf="@+id/tViewMejoraComida" />
+
+    <TextView
+        android:id="@+id/tViewPaseoMej"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cuantas veces sale"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerTipoMejora"
+        app:layout_constraintEnd_toStartOf="@+id/eTextNumPaseo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewMejoraComida" />
+
+    <EditText
+        android:id="@+id/eTextNumPaseo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tViewPaseoMej"
+        app:layout_constraintTop_toTopOf="@+id/tViewPaseoMej" />
+
+    <Spinner
+        android:id="@+id/spinnerTipoMejora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:layout_marginBottom="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnMejorar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tViewPaseoMej" />
+
+    <Button
+        android:id="@+id/btnMejorar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        android:text="Mejorar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

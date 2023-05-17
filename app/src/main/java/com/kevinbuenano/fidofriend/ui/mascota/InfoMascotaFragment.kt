@@ -64,8 +64,8 @@ class InfoMascotaFragment : Fragment() {
     private fun cargarActividad() {
         when (mascotaEntity.actividad) {
             "Muy activo" -> binding.imageView.setImageResource(R.drawable.cara_feliz)
-            "Sedentario" -> binding.imageView.setImageResource(R.drawable.cara_feliz)
-            "Moderado" -> binding.imageView.setImageResource(R.drawable.cara_feliz)
+            "Sedentario" -> binding.imageView.setImageResource(R.drawable.cara_triste)
+            "Moderado" -> binding.imageView.setImageResource(R.drawable.cara_seria)
         }
     }
 
@@ -74,9 +74,12 @@ class InfoMascotaFragment : Fragment() {
             mascotaEntity = withContext(Dispatchers.IO){
                  repository.getMascotaById(idMascota)
             }
+            binding.tViewNombreMascota.text = mascotaEntity.nombre
             binding.tViewNumeroPeso.text = "${mascotaEntity.peso} Kg"
             val diferencia = binding.tViewDifNum.text.toString().toFloat() - mascotaEntity.peso
             binding.tViewDifNum.text = diferencia.toString()
+            binding.tViewEstadoRes.text = mascotaEntity.estado
+            binding.tViewEdadNum.text = "${mascotaEntity.edad}"
             cargarActividad()
 
         }

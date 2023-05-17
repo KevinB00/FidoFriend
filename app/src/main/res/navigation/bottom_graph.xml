@@ -28,4 +28,18 @@
             android:id="@+id/action_modificarMascotaFragment_to_infoMascotaFragment"
             app:destination="@id/infoMascotaFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mejoraMascotaFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.mascota.MejoraFragment"
+        android:label="Mejora"
+        tools:layout="@layout/fragment_mejora_mascota" >
+        <action
+            android:id="@+id/action_mejoraMascotaFragment_to_mostrarMejoraFragment"
+            app:destination="@id/mostrarMejoraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mostrarMejoraFragment"
+        android:name="com.kevinbuenano.fidofriend.MostrarMejoraFragment"
+        android:label="fragment_mostrar_mejora"
+        tools:layout="@layout/fragment_mostrar_mejora" />
 </navigation>

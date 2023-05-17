@@ -31,7 +31,9 @@ class MascotaActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.infoMascotaFragment,
             R.id.historialMedicoFragment,
-            R.id.modificarMascotaFragment
+            R.id.modificarMascotaFragment,
+            R.id.mejoraMascotaFragment,
+            R.id.mostrarMejoraFragment
         )
         )
 
