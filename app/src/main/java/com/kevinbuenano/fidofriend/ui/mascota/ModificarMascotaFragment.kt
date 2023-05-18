@@ -79,8 +79,10 @@ class ModificarMascotaFragment : Fragment() {
         binding.seekPeso.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val valor = progress - 13
-                peso = mascotaEntity.peso + valor
-                binding.tViewPesoMascota.text = valor.toString()
+                mascotaEntityLiveData.value?.let { mascota ->
+                        peso = mascota.peso + valor
+                    binding.tViewPesoMascota.text = peso.toString()
+                }
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -132,7 +134,11 @@ class ModificarMascotaFragment : Fragment() {
 
         }
         binding.btnModificar.setOnClickListener {
-            modificarMascota()
+            if (peso == 0.0f) {
+                peso = mascotaEntity.peso
+            }
+                modificarMascota()
+
         }
 
     }
@@ -156,7 +162,6 @@ class ModificarMascotaFragment : Fragment() {
                 mascotaEntity.perroGato,
                 mascotaEntity.usuario_id
             )
-            binding.seekPeso.progress = 0
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     repository.updateMascota(mascota)
@@ -164,6 +169,12 @@ class ModificarMascotaFragment : Fragment() {
                 Toast.makeText(requireContext(), "Mascota modificada", Toast.LENGTH_LONG).show()
                 val bundle = Bundle()
                 findNavController().navigate(R.id.action_modificarMascotaFragment_to_infoMascotaFragment, bundle)
+                val fragment = parentFragmentManager.findFragmentById(R.id.modificarMascotaFragment)
+                if (fragment != null) {
+                    val fragmentTransaction = parentFragmentManager.beginTransaction()
+                    fragmentTransaction.remove(fragment)
+                    fragmentTransaction.commit()
+                }
             }
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Valores no válidos", Toast.LENGTH_LONG).show()
