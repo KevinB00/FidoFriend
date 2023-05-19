@@ -10,7 +10,7 @@ class HistorialMedicoAdapter(private val historialMedico: List<HistorialMedicoEn
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): HistorialMedicoAdapter.ViewHolder {
+    ): ViewHolder {
         val binding = ViewHistorialVeterinarioBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,

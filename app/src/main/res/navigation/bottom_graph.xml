@@ -42,4 +42,9 @@
         android:name="com.kevinbuenano.fidofriend.ui.mascota.MostrarMejoraFragment"
         android:label="fragment_mostrar_mejora"
         tools:layout="@layout/fragment_mostrar_mejora" />
+    <fragment
+        android:id="@+id/historialLimpiezaFragment"
+        android:name="com.kevinbuenano.fidofriend.ui.mascota.HistorialLimpiezaFragment"
+        android:label="Historial limpieza"
+        tools:layout="@layout/fragment_historial_limpieza" />
 </navigation>

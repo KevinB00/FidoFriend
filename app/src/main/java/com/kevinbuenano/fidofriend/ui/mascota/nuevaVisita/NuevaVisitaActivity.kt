@@ -2,12 +2,11 @@ package com.kevinbuenano.fidofriend.ui.mascota.nuevaVisita
 
 import android.app.DatePickerDialog
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.kevinbuenano.fidofriend.R
 import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.HistorialMedicoEntity
 import com.kevinbuenano.fidofriend.database.repository.historialMedicoRepository
@@ -15,7 +14,6 @@ import com.kevinbuenano.fidofriend.databinding.ActivityNuevaVisitaBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
@@ -31,7 +29,7 @@ class NuevaVisitaActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nueva_visita)
+        setContentView(ActivityNuevaVisitaBinding.inflate(layoutInflater).also { binding = it }.root)
         title = "Crear visita"
         idMascota = intent.getIntExtra("idMascota", 0)
         db = appDatabase.getDatabase(applicationContext)

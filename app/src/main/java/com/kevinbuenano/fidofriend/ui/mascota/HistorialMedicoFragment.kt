@@ -33,7 +33,7 @@ class HistorialMedicoFragment : Fragment() {
     private lateinit var historialMedicoRepository: historialMedicoRepository
     private lateinit var db: appDatabase
     var idMascota: Int = 0
-private lateinit var mascotaEntity: MascotaEntity
+    private lateinit var mascotaEntity: MascotaEntity
 
 
     override fun onCreateView(

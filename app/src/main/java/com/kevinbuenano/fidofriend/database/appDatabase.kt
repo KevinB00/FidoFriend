@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.kevinbuenano.fidofriend.database.entities.HistorialLimpiezaEntity
+import com.kevinbuenano.fidofriend.database.entities.HistorialMedicoEntity
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 
 
-@Database(entities = arrayOf(UsuarioEntity::class, MascotaEntity::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(UsuarioEntity::class, MascotaEntity::class, HistorialMedicoEntity::class, HistorialLimpiezaEntity::class), version = 1, exportSchema = false)
 abstract class appDatabase : RoomDatabase() {
     abstract fun usuarioDao() : UsuarioDAO
     abstract fun mascotaDao(): MascotaDAO
     abstract fun historialMedicoDao(): HistorialMedicoDAO
+    abstract fun historialLimpiezaDao(): HistorialLimpiezaDAO
 
     companion object {
         @Volatile

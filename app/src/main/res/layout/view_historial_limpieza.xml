@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -17,21 +16,17 @@
             android:orientation="vertical"
             android:padding="16dp">
             <TextView
-                android:id="@+id/tituloRevision"
+                android:id="@+id/tipoLimpieza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Titulo revisión"
                 android:textAlignment="center"/>
             <TextView
-                android:id="@+id/fechaRevision"
+                android:id="@+id/fechaLimpieza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="12-1-2012" />
-            <TextView
-                android:id="@+id/resumenVisita"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Se ha realizado una revisión dónde..."/>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

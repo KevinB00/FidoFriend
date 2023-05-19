@@ -20,6 +20,6 @@ interface HistorialMedicoDAO {
     @Update
     suspend fun updateHistorialMedico(historialMedicoEntity: HistorialMedicoEntity): Int
 
-    @Query("SELECT * FROM historial_mascota WHERE mascota = :idMascota")
+    @Query(value = "SELECT * FROM historial_mascota WHERE mascota = :idMascota")
     fun getHistorialMedico(idMascota: Int): MutableList<HistorialMedicoEntity>
 }
