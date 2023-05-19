@@ -1,6 +1,7 @@
 package com.kevinbuenano.fidofriend.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 import com.kevinbuenano.fidofriend.database.repository.usuarioRepository
 import com.kevinbuenano.fidofriend.databinding.FragmentPerfilBinding
+import com.kevinbuenano.fidofriend.ui.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -153,6 +155,9 @@ class PerfilFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 obtenerUsuario()
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kevinbuenano.fidofriend.database.entities.HistorialMedicoEntity
 import com.kevinbuenano.fidofriend.databinding.ViewHistorialVeterinarioBinding
 
-class HistorialMedicoAdapter(private val historialMedico: List<HistorialMedicoEntity>, private val historialMedicoClickListener: (HistorialMedicoEntity) -> Unit) : RecyclerView.Adapter<HistorialMedicoAdapter.ViewHolder>() {
+class HistorialMedicoAdapter(private val historialMedico: List<HistorialMedicoEntity>) : RecyclerView.Adapter<HistorialMedicoAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -21,9 +21,6 @@ class HistorialMedicoAdapter(private val historialMedico: List<HistorialMedicoEn
 
     override fun onBindViewHolder(holder: HistorialMedicoAdapter.ViewHolder, position: Int) {
         holder.bind(historialMedico[position])
-        holder.itemView.setOnClickListener {
-            historialMedicoClickListener(historialMedico[position])
-        }
     }
 
     override fun getItemCount(): Int = historialMedico.size

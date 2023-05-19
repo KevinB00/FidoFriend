@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mascota.nuevaVisita.NuevaVisitaActivity">
+
+    <TextView
+        android:id="@+id/textViewInfoTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="Titulo o referencia de la visita:"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTituloVisita"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTituloVisita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewInfoTitulo" />
+
+    <TextView
+        android:id="@+id/tViewInfoFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="Fecha de la visita:"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/eTextFechaVisita"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTituloVisita" />
+
+    <EditText
+        android:id="@+id/eTextFechaVisita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="40dp"
+        android:clickable="true"
+        android:ems="10"
+        android:inputType="text"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/tViewResumen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewInfoFecha" />
+
+    <TextView
+        android:id="@+id/tViewResumen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="Resumen de la visita:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eTextFechaVisita" />
+
+    <EditText
+        android:id="@+id/eTextResumenInput"
+        android:layout_width="390dp"
+        android:layout_height="306dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toTopOf="@+id/btnAnyadirVisitaNueva"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tViewResumen"
+        app:layout_constraintVertical_bias="0.153" />
+
+    <Button
+        android:id="@+id/btnAnyadirVisitaNueva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir"
+        app:layout_constraintTop_toBottomOf="@+id/eTextResumenInput"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

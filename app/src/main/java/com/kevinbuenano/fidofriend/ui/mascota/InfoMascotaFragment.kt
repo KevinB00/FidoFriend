@@ -49,11 +49,6 @@ class InfoMascotaFragment : Fragment() {
         }
         repository = mascotaRepository(db.mascotaDao())
         cargar()
-
-
-
-
-
     }
 
     override fun onResume() {

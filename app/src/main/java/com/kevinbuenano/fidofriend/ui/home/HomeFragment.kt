@@ -95,6 +95,8 @@ class HomeFragment : Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapterGato
         }
+
+
     }
 
     private fun setUpRecyclerViewPerro() {

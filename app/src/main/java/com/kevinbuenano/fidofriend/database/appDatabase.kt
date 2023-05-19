@@ -12,6 +12,7 @@ import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
 abstract class appDatabase : RoomDatabase() {
     abstract fun usuarioDao() : UsuarioDAO
     abstract fun mascotaDao(): MascotaDAO
+    abstract fun historialMedicoDao(): HistorialMedicoDAO
 
     companion object {
         @Volatile
