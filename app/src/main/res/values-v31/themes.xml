@@ -16,8 +16,9 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="Theme.MySplasScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#A9B2E4</item>
+        <item name="windowSplashScreenBackground">#F2F2F3</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/mascotas</item>
+        <item name="android:windowSplashScreenAnimationDuration">3000</item>
         <item name="postSplashScreenTheme">@style/Theme.FidoFriend</item>
     </style>
 </resources>

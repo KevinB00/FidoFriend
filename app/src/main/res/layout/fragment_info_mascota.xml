@@ -22,63 +22,17 @@
         tools:text="Nombre mascota" />
 
     <TextView
-        android:id="@+id/tViewComida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Comida(g)"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tViewPeso"
-        app:layout_constraintEnd_toStartOf="@+id/tViewGramos"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tViewNombreMascota" />
-
-    <TextView
-        android:id="@+id/tViewGramos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/tViewVeces"
-        app:layout_constraintStart_toEndOf="@+id/tViewComida"
-        app:layout_constraintTop_toTopOf="@+id/tViewComida"
-        tools:text="200" />
-
-    <TextView
-        android:id="@+id/tViewVeces"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:text="Veces"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/tViewNumero"
-        app:layout_constraintStart_toEndOf="@+id/tViewGramos"
-        app:layout_constraintTop_toTopOf="@+id/tViewGramos" />
-
-    <TextView
-        android:id="@+id/tViewNumero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginEnd="48dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tViewVeces"
-        app:layout_constraintTop_toTopOf="@+id/tViewVeces"
-        tools:text="3" />
-
-    <TextView
         android:id="@+id/tViewPeso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:text="Peso"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tViewNombreMascota"
         app:layout_constraintBottom_toTopOf="@+id/tViewDiferenciaText"
         app:layout_constraintEnd_toStartOf="@+id/tViewNumeroPeso"
-        app:layout_constraintStart_toStartOf="@+id/tViewComida"
-        app:layout_constraintTop_toBottomOf="@+id/tViewComida" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tViewNumeroPeso"
@@ -95,13 +49,14 @@
         android:id="@+id/tViewDiferenciaText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="30dp"
         android:text="Diferencia"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tViewActividad"
         app:layout_constraintEnd_toStartOf="@+id/tViewDifNum"
-        app:layout_constraintStart_toStartOf="@+id/tViewPeso"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tViewPeso" />
 
     <TextView
@@ -119,13 +74,14 @@
         android:id="@+id/tViewActividad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="43dp"
         android:text="Actividad"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tViewPaseo"
+        app:layout_constraintBottom_toTopOf="@+id/tViewEstado"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/tViewDiferenciaText"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tViewDiferenciaText" />
 
     <ImageView
@@ -139,46 +95,24 @@
         app:layout_constraintTop_toTopOf="@+id/tViewActividad" />
 
     <TextView
-        android:id="@+id/tViewPaseo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:text="Paseo"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tViewEstado"
-        app:layout_constraintEnd_toStartOf="@+id/tViewNumPaseo"
-        app:layout_constraintStart_toStartOf="@+id/tViewActividad"
-        app:layout_constraintTop_toBottomOf="@+id/tViewActividad" />
-
-    <TextView
-        android:id="@+id/tViewNumPaseo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="240dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tViewPaseo"
-        app:layout_constraintTop_toTopOf="@+id/tViewPaseo"
-        tools:text="3 veces" />
-
-    <TextView
         android:id="@+id/tViewEstado"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="30dp"
         android:text="Estado"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tViewActividad"
         app:layout_constraintBottom_toTopOf="@+id/tViewEdad"
         app:layout_constraintEnd_toStartOf="@+id/tViewEstadoRes"
-        app:layout_constraintStart_toStartOf="@+id/tViewPaseo"
-        app:layout_constraintTop_toBottomOf="@+id/tViewPaseo" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tViewEdad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:text="Edad"
@@ -186,7 +120,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tViewEdadNum"
-        app:layout_constraintStart_toStartOf="@+id/tViewEstado"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tViewEstado" />
 
     <TextView

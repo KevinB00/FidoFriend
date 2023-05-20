@@ -1,10 +1,14 @@
 package com.kevinbuenano.fidofriend.ui
 
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.AnticipateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.UsuarioEntity
@@ -22,8 +26,28 @@ class LoginActivity : AppCompatActivity() {
     lateinit var contrasenya: String
     lateinit var result: UsuarioEntity
     override fun onCreate(savedInstanceState: Bundle?) {
+        val screenSplash = installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(ActivityLoginBinding.inflate(layoutInflater).also { binding = it }.root)
+        screenSplash.setOnExitAnimationListener{ splashScreenView ->
+            splashScreenView.iconView?.let {icon ->
+                val iconAnimator = ValueAnimator.ofInt(icon.height, 0).setDuration(2000)
+                iconAnimator.addUpdateListener {
+                    val value = it.animatedValue as Int
+                    icon.layoutParams.width = value
+                    icon.layoutParams.height = value
+                    icon.requestLayout()
+                    if (value == 0){
+                        splashScreenView.remove()
+                    }
+                }
+                val animationSet = AnimatorSet()
+                animationSet.interpolator = AnticipateInterpolator(5f)
+                animationSet.play(iconAnimator)
+                animationSet.start()
+            }
+        }
+
         val usuario = this.getSharedPreferences("com.kevinbuenano.fidofriend", Context.MODE_PRIVATE)
         val db = appDatabase.getDatabase(applicationContext)
         repository = usuarioRepository(db.usuarioDao())

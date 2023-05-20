@@ -55,6 +55,7 @@ class HistorialLimpiezaFragment : Fragment() {
 
         binding.btnAnyadirLimpieza.setOnClickListener {
             val intent = Intent(activity, NuevaLimpiezaActivity::class.java).putExtra("idMascota", idMascota)
+            startActivity(intent)
         }
 
     }

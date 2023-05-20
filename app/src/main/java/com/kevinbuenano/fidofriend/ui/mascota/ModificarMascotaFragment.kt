@@ -11,8 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.kevinbuenano.fidofriend.R
 import com.kevinbuenano.fidofriend.database.appDatabase
 import com.kevinbuenano.fidofriend.database.entities.MascotaEntity
 import com.kevinbuenano.fidofriend.database.repository.mascotaRepository
@@ -43,8 +41,6 @@ class ModificarMascotaFragment : Fragment() {
     val actividad = arrayOf("Muy activo", "Sedentario", "Moderado")
     val tamanyo = arrayOf("Pequeño", "Mediano", "Grande")
     private val mascotaEntityLiveData = MutableLiveData<MascotaEntity>()
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -137,7 +133,7 @@ class ModificarMascotaFragment : Fragment() {
             if (peso == 0.0f) {
                 peso = mascotaEntity.peso
             }
-                modificarMascota()
+                modificarMascota(mascotaActivity)
 
         }
 
@@ -148,7 +144,7 @@ class ModificarMascotaFragment : Fragment() {
         cargarMascota(idMascota)
     }
 
-    private fun modificarMascota() {
+    private fun modificarMascota(mascotaActivity: MascotaActivity) {
         try {
             var mascota = MascotaEntity(
                 mascotaEntity.id_mascota,
@@ -167,14 +163,7 @@ class ModificarMascotaFragment : Fragment() {
                     repository.updateMascota(mascota)
                 }
                 Toast.makeText(requireContext(), "Mascota modificada", Toast.LENGTH_LONG).show()
-                val bundle = Bundle()
-                findNavController().navigate(R.id.action_modificarMascotaFragment_to_infoMascotaFragment, bundle)
-                val fragment = parentFragmentManager.findFragmentById(R.id.modificarMascotaFragment)
-                if (fragment != null) {
-                    val fragmentTransaction = parentFragmentManager.beginTransaction()
-                    fragmentTransaction.remove(fragment)
-                    fragmentTransaction.commit()
-                }
+                mascotaActivity.onBackPressed()
             }
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Valores no válidos", Toast.LENGTH_LONG).show()

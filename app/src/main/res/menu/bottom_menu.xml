@@ -11,8 +11,12 @@
         android:title="Historial veterinario"/>
 
     <item
+        android:id="@+id/historialLimpiezaFragment"
+        android:icon="@drawable/baseline_shower_24"
+        android:title="Historial limpieza" />
+
+    <item
         android:id="@+id/mejoraMascotaFragment"
         android:icon="@drawable/baseline_auto_graph_24"
         android:title="Mejorar"/>
-
 </menu>

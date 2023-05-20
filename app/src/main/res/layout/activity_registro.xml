@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E4D5D5"
+    android:background="#FEFEFE"
     tools:context=".ui.RegistroActivity">
 
     <TextView
@@ -104,7 +104,7 @@
         android:id="@+id/btnRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#5F1A04"
+        android:backgroundTint="#03A9F4"
         android:text="Registrar"
         android:textColor="#F8F6F6"
         android:textStyle="bold"

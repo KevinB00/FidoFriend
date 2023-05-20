@@ -41,7 +41,17 @@
         android:id="@+id/mostrarMejoraFragment"
         android:name="com.kevinbuenano.fidofriend.ui.mascota.MostrarMejoraFragment"
         android:label="fragment_mostrar_mejora"
-        tools:layout="@layout/fragment_mostrar_mejora" />
+        tools:layout="@layout/fragment_mostrar_mejora" >
+        <argument
+            android:name="numComida"
+            app:argType="integer" />
+        <argument
+            android:name="numPaseo"
+            app:argType="integer" />
+        <argument
+            android:name="mejora"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/historialLimpiezaFragment"
         android:name="com.kevinbuenano.fidofriend.ui.mascota.HistorialLimpiezaFragment"
