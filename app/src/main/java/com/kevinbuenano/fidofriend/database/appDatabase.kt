@@ -16,8 +16,6 @@ abstract class appDatabase : RoomDatabase() {
     abstract fun mascotaDao(): MascotaDAO
     abstract fun historialMedicoDao(): HistorialMedicoDAO
     abstract fun historialLimpiezaDao(): HistorialLimpiezaDAO
-    abstract fun recordatorioDao(): RecordatorioDAO
-
     companion object {
         @Volatile
         private var INSTANCE: appDatabase? = null

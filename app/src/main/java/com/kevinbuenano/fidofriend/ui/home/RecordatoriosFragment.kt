@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment
 import com.kevinbuenano.fidofriend.databinding.FragmentRecordatoriosBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
 
 
@@ -30,8 +32,8 @@ class RecordatoriosFragment : Fragment() {
     private lateinit var binding: FragmentRecordatoriosBinding
     private var fechaString: String? = null
     private var fecha: LocalDate? = null
+    private var dias: Int = 0
     val notificationId = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +52,9 @@ class RecordatoriosFragment : Fragment() {
         val datePickerListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             // Convierte los valores de fecha seleccionados en un objeto LocalDate
             fecha = LocalDate.of(year, month + 1, dayOfMonth)
+            val fechaActual = LocalDate.now()
+
+            dias = ChronoUnit.DAYS.between(fechaActual, fecha).toInt()
 
             // Actualiza el texto del EditText con la fecha seleccionada
             val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
@@ -80,24 +85,25 @@ class RecordatoriosFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ServiceCast")
     private fun crearNotificacion() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "mi_canal_id"
-            val channelName = "Canal de FidoFriend"
-            val channelDescription = "Canal de recordatorios"
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channelId = "mi_canal_id"
+                val channelName = "Canal de FidoFriend"
+                val channelDescription = "Canal de recordatorios"
 
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelId, channelName, importance).apply {
-                description = channelDescription
+                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                val channel = NotificationChannel(channelId, channelName, importance).apply {
+                    description = channelDescription
+                }
+                val notificationManager: NotificationManager =
+                    requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(channel)
             }
-            val notificationManager: NotificationManager =
-                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
             //Crea el canal de notificación (solo necesario para Android 8.0 en adelante)
 
             val builder = NotificationCompat.Builder(requireContext(), "mi_canal_id")
                 .setSmallIcon(R.drawable.sym_def_app_icon)
-                .setWhen(fecha!!.toEpochDay())
+                .setWhen(dias.toLong() * 86400000)
                 .setContentTitle(binding.edTitulo.text.toString())
                 .setContentText(binding.edTextDescrip.text.toString())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true)
@@ -106,5 +112,8 @@ class RecordatoriosFragment : Fragment() {
             with(NotificationManagerCompat.from(requireContext())) {
                 notify(notificationId, builder.build())
             }
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Revisa la fecha", Toast.LENGTH_SHORT).show()
+        }
         }
             }
