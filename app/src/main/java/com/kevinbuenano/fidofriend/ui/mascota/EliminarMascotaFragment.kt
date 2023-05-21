@@ -49,10 +49,11 @@ class EliminarMascotaFragment : Fragment() {
         }
         binding.btnBorrarMascota.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                mascotaEntity = withContext(Dispatchers.IO) {
-                    repository.getMascotaById(idMascota)
+               withContext(Dispatchers.IO) {
+                    mascotaEntity = repository.getMascotaById(idMascota)
+                    repository.removeMascota(mascotaEntity)
                 }
-                repository.removeMascota(mascotaEntity)
+
                 requireActivity().finish()
             }
         }

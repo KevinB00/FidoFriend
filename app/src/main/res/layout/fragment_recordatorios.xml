@@ -10,12 +10,14 @@
         android:id="@+id/btnAnyadirNoti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="101dp"
         android:layout_marginBottom="20dp"
         android:text="Añadir"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/btnBorrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edTextDescrip" />
 
     <Button
         android:id="@+id/btnBorrar"
@@ -32,29 +34,39 @@
         android:id="@+id/edTextDia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:clickable="true"
-        android:editable="false"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="date"
         android:text="Selecciona dia"
-        app:layout_constraintBottom_toTopOf="@+id/edTextHora"
+        app:layout_constraintBottom_toTopOf="@+id/edTitulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edTextHora"
+        android:id="@+id/edTextDescrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:editable="false"
         android:ems="10"
         android:inputType="text"
-        android:text="Selecciona hora"
+        android:text="descripción"
         app:layout_constraintBottom_toTopOf="@+id/btnAnyadirNoti"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edTextDia" />
+        app:layout_constraintTop_toBottomOf="@+id/edTitulo" />
+
+    <EditText
+        android:id="@+id/edTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Título"
+        app:layout_constraintTop_toBottomOf="@+id/edTextDia"
+        app:layout_constraintBottom_toTopOf="@+id/edTextDescrip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

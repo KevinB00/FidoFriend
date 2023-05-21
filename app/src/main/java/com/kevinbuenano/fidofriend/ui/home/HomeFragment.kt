@@ -1,5 +1,6 @@
 package com.kevinbuenano.fidofriend.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -65,7 +66,6 @@ class HomeFragment : Fragment() {
         }
 
     }
-
     override fun onResume() {
         super.onResume()
         cargar(nombre)
@@ -83,6 +83,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpRecyclerViewGato() {
         if (gatos.isNotEmpty()){
             adapterGato = GatoAdapter(gatos,
@@ -94,11 +95,13 @@ class HomeFragment : Fragment() {
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapterGato
+            adapterGato.notifyDataSetChanged()
         }
 
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpRecyclerViewPerro() {
         if (perros.isNotEmpty()){
             adapterPerro = PerroAdapter(perros
@@ -110,6 +113,7 @@ class HomeFragment : Fragment() {
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapterPerro
+            adapterPerro.notifyDataSetChanged()
         }
     }
 }

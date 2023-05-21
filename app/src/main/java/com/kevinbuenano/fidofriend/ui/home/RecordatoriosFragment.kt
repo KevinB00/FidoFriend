@@ -1,16 +1,25 @@
 package com.kevinbuenano.fidofriend.ui.home
 
+import android.R
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import com.kevinbuenano.fidofriend.R
+import com.kevinbuenano.fidofriend.databinding.FragmentRecordatoriosBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -18,43 +27,84 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class RecordatoriosFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentRecordatoriosBinding
+    private var fechaString: String? = null
+    private var fecha: LocalDate? = null
+    val notificationId = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recordatorios, container, false)
+        binding = FragmentRecordatoriosBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CalendarioFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecordatoriosFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        val datePickerListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            // Convierte los valores de fecha seleccionados en un objeto LocalDate
+            fecha = LocalDate.of(year, month + 1, dayOfMonth)
+
+            // Actualiza el texto del EditText con la fecha seleccionada
+            val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            fechaString = fecha?.format(formato)
+            binding.edTextDia.setText(fecha?.format(formato))
+        }
+        binding.edTextDia.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+            // Crea un nuevo DatePickerDialog con la fecha actual
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                datePickerListener,
+                year,
+                month,
+                dayOfMonth
+            )
+            datePickerDialog.show()
+        }
+        binding.btnAnyadirNoti.setOnClickListener {
+            crearNotificacion()
+        }
     }
-}
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("ServiceCast")
+    private fun crearNotificacion() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "mi_canal_id"
+            val channelName = "Canal de FidoFriend"
+            val channelDescription = "Canal de recordatorios"
+
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelId, channelName, importance).apply {
+                description = channelDescription
+            }
+            val notificationManager: NotificationManager =
+                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+            //Crea el canal de notificación (solo necesario para Android 8.0 en adelante)
+
+            val builder = NotificationCompat.Builder(requireContext(), "mi_canal_id")
+                .setSmallIcon(R.drawable.sym_def_app_icon)
+                .setWhen(fecha!!.toEpochDay())
+                .setContentTitle(binding.edTitulo.text.toString())
+                .setContentText(binding.edTextDescrip.text.toString())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true)
+
+            //Muestra la notificación
+            with(NotificationManagerCompat.from(requireContext())) {
+                notify(notificationId, builder.build())
+            }
+        }
+            }

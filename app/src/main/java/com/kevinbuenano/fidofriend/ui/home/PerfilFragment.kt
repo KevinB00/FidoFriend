@@ -68,7 +68,7 @@ class PerfilFragment : Fragment() {
                             "El dato introducido no es válido",
                             Toast.LENGTH_LONG
                         ).show()
-                        obtenerUsuario()
+                        resultado()
                     }else{
                             val editor = usuario?.edit()
                             editor?.putString("nombre", usuarioEntity.nombre)
@@ -92,7 +92,7 @@ class PerfilFragment : Fragment() {
                             "El dato introducido no es válido",
                             Toast.LENGTH_LONG
                         ).show()
-                        obtenerUsuario()
+                        resultado()
                     }else{
                         val editor = usuario?.edit()
                         editor?.putString("contrasenya", usuarioEntity.contrasenya)
@@ -106,7 +106,7 @@ class PerfilFragment : Fragment() {
             try {
                 var cambioEmail = binding.editEmail.text.toString()
                 usuarioEntity.email = cambioEmail
-                resultado()
+                obtenerUsuario()
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -115,7 +115,7 @@ class PerfilFragment : Fragment() {
             try {
                 var cambioLocalidad = binding.editLocalidad.text.toString()
                 usuarioEntity.localidad = cambioLocalidad
-                resultado()
+                obtenerUsuario()
             }catch (e: Exception){
                 Toast.makeText(requireContext(), "El dato introducido no es válido", Toast.LENGTH_LONG).show()
             }
@@ -126,6 +126,9 @@ class PerfilFragment : Fragment() {
                     val result = withContext(Dispatchers.IO){
                         usuarioRepository.removeUsuario(usuarioEntity)
                     }
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
                 }
             }catch (e: Exception) {
                 Toast.makeText(requireContext(), "Error borrando tarea", Toast.LENGTH_LONG).show()
@@ -154,7 +157,7 @@ class PerfilFragment : Fragment() {
                     "El dato introducido no es válido",
                     Toast.LENGTH_LONG
                 ).show()
-                obtenerUsuario()
+            } else {
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
