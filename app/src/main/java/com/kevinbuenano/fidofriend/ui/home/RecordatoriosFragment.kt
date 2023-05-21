@@ -1,11 +1,13 @@
 package com.kevinbuenano.fidofriend.ui.home
 
-import android.R
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.DatePickerDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,14 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.kevinbuenano.fidofriend.databinding.FragmentRecordatoriosBinding
+import com.kevinbuenano.fidofriend.ui.home.AlarmNotificacion.Companion.NOTIFICATION_ID
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
-import java.util.Calendar
 
 
 /**
@@ -30,10 +30,9 @@ import java.util.Calendar
  */
 class RecordatoriosFragment : Fragment() {
     private lateinit var binding: FragmentRecordatoriosBinding
-    private var fechaString: String? = null
+    private var fechaString: String = ""
     private var fecha: LocalDate? = null
     private var dias: Int = 0
-    val notificationId = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,72 +47,67 @@ class RecordatoriosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val datePickerListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            // Convierte los valores de fecha seleccionados en un objeto LocalDate
-            fecha = LocalDate.of(year, month + 1, dayOfMonth)
+        crearCanal()
+        binding.edTextDia.setOnClickListener {
             val fechaActual = LocalDate.now()
 
-            dias = ChronoUnit.DAYS.between(fechaActual, fecha).toInt()
+            val datePickerDialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
+                fecha = LocalDate.of(year, month + 1, dayOfMonth)
+            }, fechaActual.year, fechaActual.monthValue - 1, fechaActual.dayOfMonth)
 
-            // Actualiza el texto del EditText con la fecha seleccionada
-            val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            fechaString = fecha?.format(formato)
-            binding.edTextDia.setText(fecha?.format(formato))
-        }
-        binding.edTextDia.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-
-            // Crea un nuevo DatePickerDialog con la fecha actual
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                datePickerListener,
-                year,
-                month,
-                dayOfMonth
-            )
+            datePickerDialog.datePicker.minDate = fechaActual.toEpochDay() * 1000
             datePickerDialog.show()
+            fechaString = fecha?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString()
+            binding.edTextDia.setText(fechaString)
         }
+
         binding.btnAnyadirNoti.setOnClickListener {
-            crearNotificacion()
+            scheduleNotification()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun scheduleNotification() {
+        try {
+            val intent =
+                Intent(requireContext().applicationContext, AlarmNotificacion::class.java).apply {
+                    putExtra("title", binding.edTitulo.text.toString())
+                    putExtra("description", binding.edTextDescrip.text.toString())
+                }
+            val pendingIntent = PendingIntent.getBroadcast(
+                requireContext().applicationContext,
+                NOTIFICATION_ID,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+            val notoficationFecha = fecha!!.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+            val alarmManager =
+                requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, notoficationFecha, pendingIntent)
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Elija una fecha válida y rellene todos los campos", Toast.LENGTH_SHORT).show()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ServiceCast")
-    private fun crearNotificacion() {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channelId = "mi_canal_id"
-                val channelName = "Canal de FidoFriend"
-                val channelDescription = "Canal de recordatorios"
-
-                val importance = NotificationManager.IMPORTANCE_DEFAULT
-                val channel = NotificationChannel(channelId, channelName, importance).apply {
-                    description = channelDescription
-                }
-                val notificationManager: NotificationManager =
-                    requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.createNotificationChannel(channel)
-            }
-            //Crea el canal de notificación (solo necesario para Android 8.0 en adelante)
-
-            val builder = NotificationCompat.Builder(requireContext(), "mi_canal_id")
-                .setSmallIcon(R.drawable.sym_def_app_icon)
-                .setWhen(dias.toLong() * 86400000)
-                .setContentTitle(binding.edTitulo.text.toString())
-                .setContentText(binding.edTextDescrip.text.toString())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true)
-
-            //Muestra la notificación
-            with(NotificationManagerCompat.from(requireContext())) {
-                notify(notificationId, builder.build())
-            }
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Revisa la fecha", Toast.LENGTH_SHORT).show()
+             private fun crearCanal() {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                          val channel = NotificationChannel(
+                              MY_CHANNEL_ID,
+                              "Canal de FidoFriend",
+                              NotificationManager.IMPORTANCE_DEFAULT
+                          ).apply {
+                              description = "Canal de recordatorios"
+                          }
+                         val notificationManager: NotificationManager =
+                             requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                         notificationManager.createNotificationChannel(channel)
+                     }
         }
-        }
-            }
+
+    companion object {
+        const val MY_CHANNEL_ID = "mi_canal_id"
+    }
+}
