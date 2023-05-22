@@ -1,5 +1,6 @@
 package com.kevinbuenano.fidofriend.ui.home
 
+//noinspection SuspiciousImport
 import android.R
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,22 +10,26 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.kevinbuenano.fidofriend.ui.LoginActivity
+import kotlin.random.Random
 
 class AlarmNotificacion: BroadcastReceiver() {
 
-    companion object{
-        const val NOTIFICATION_ID = 1
-    }
 
     override fun onReceive(context: Context, intent: Intent?) {
         val titulo = intent?.getStringExtra("title").toString()
         val mensaje = intent?.getStringExtra("description").toString()
+        val notification_id = Random.nextInt()
         if (titulo != null && mensaje != null) {
-            crearNotificacion(context, titulo, mensaje)
+            crearNotificacion(context, titulo, mensaje, notification_id)
         }
     }
 
-    private fun crearNotificacion(context: Context, titulo: String, mensaje: String) {
+    private fun crearNotificacion(
+        context: Context,
+        titulo: String,
+        mensaje: String,
+        notification_id: Int
+    ) {
 
         val intent = Intent(context, LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -45,7 +50,7 @@ class AlarmNotificacion: BroadcastReceiver() {
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(NOTIFICATION_ID, notification)
+        manager.notify(notification_id, notification)
     }
 
 }
