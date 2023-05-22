@@ -178,23 +178,75 @@ class DatosMascotaFragment : Fragment() {
     private fun anyadirMascota() {
         try {
             if (fechaNacimientoString != null || binding.edTextPeso.text.isNotEmpty() || estado != null || actividadMascota != null || tamanyoMascota != null) {
-                val mascota = MascotaEntity(
-                    id_mascota = 0,
-                    binding.edTextNombre.text.toString(),
-                    fechaNacimientoString!!,
-                    binding.edTextPeso.text.toString().toFloatOrNull()!!,
-                    estado!!,
-                    edad,
-                    actividadMascota!!,
-                    tamanyoMascota!!,
-                    tipoAnimal,
-                    usuarioEntity.id
-                )
-                viewLifecycleOwner.lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        mascotaRepository.addMascota(mascota)
+                if (edad > 4 && estado == "Cachorro"){
+                    Toast.makeText(requireContext(), "El cachorro no puede ser mayor de 4 años", Toast.LENGTH_LONG).show()
+                }else if(estado == "Obeso") {
+                    when (tipoAnimal) {
+                        1 -> {
+                            when (tamanyoMascota) {
+                                "Pequeño" -> {
+                                    if (binding.edTextPeso.text.toString().toInt() <= 25) {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "El perro no puede ser menor de 25 kilos si es obeso",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+
+                                "Mediano" -> {
+                                    if (binding.edTextPeso.text.toString().toInt() <= 27) {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "El perro no puede ser menor de 27 kilos si es obeso",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                    }
+                                }
+
+                                "Grande" -> {
+                                    if (binding.edTextPeso.text.toString().toInt() <= 40) {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "El perro no puede ser menor de 40 kilos si es obeso",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+                            }
+                        }
+
+                        2 -> {
+                            if (binding.edTextPeso.text.toString().toFloat() <= 5.2f) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "El gato no puede ser menor de 5 kilos y obeso",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                            }
+                        }
                     }
-                    requireActivity().finish()
+                }else{
+                    val mascota = MascotaEntity(
+                        id_mascota = 0,
+                        binding.edTextNombre.text.toString(),
+                        fechaNacimientoString!!,
+                        binding.edTextPeso.text.toString().toFloatOrNull()!!,
+                        estado!!,
+                        edad,
+                        actividadMascota!!,
+                        tamanyoMascota!!,
+                        tipoAnimal,
+                        usuarioEntity.id
+                    )
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            mascotaRepository.addMascota(mascota)
+                        }
+                        requireActivity().finish()
+                    }
                 }
             }else{
                 Toast.makeText(requireContext(), "Rellene los campos para añadir", Toast.LENGTH_LONG).show()

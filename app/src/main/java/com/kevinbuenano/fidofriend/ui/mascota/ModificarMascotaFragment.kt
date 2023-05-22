@@ -1,5 +1,6 @@
 package com.kevinbuenano.fidofriend.ui.mascota
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +20,8 @@ import com.kevinbuenano.fidofriend.databinding.FragmentModificarMascotaBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.time.Period
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,6 +64,7 @@ class ModificarMascotaFragment : Fragment() {
      return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mascotaActivity = activity as MascotaActivity
@@ -144,26 +149,89 @@ class ModificarMascotaFragment : Fragment() {
         cargarMascota(idMascota)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun modificarMascota(mascotaActivity: MascotaActivity) {
         try {
-            var mascota = MascotaEntity(
-                mascotaEntity.id_mascota,
-                mascotaEntity.nombre,
-                mascotaEntity.fecha_nacimiento,
-                peso,
-                estadoMascota,
-                mascotaEntity.edad,
-                actividadMascota,
-                tamanyoMascota,
-                mascotaEntity.perroGato,
-                mascotaEntity.usuario_id
-            )
-            viewLifecycleOwner.lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    repository.updateMascota(mascota)
+            if (mascotaEntity.edad > 4 && estadoMascota == "Cachorro") {
+                Toast.makeText(
+                    requireContext(),
+                    "El cachorro no puede ser mayor de 4 años",
+                    Toast.LENGTH_LONG
+                ).show()
+            }else if(estadoMascota == "Obeso") {
+                    when (mascotaEntity.perroGato) {
+                        1 -> {
+                            when (tamanyoMascota) {
+                                "Pequeño" -> {
+                                    if (peso.toInt() <= 25) {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "El perro no puede ser menor de 25 kilos si es obeso",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+
+                                "Mediano" -> {
+                                    if (peso.toInt() <= 27) {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "El perro no puede ser menor de 27 kilos si es obeso",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                    }
+                                }
+
+                                "Grande" -> {
+                                    if (peso.toInt() <= 40) {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "El perro no puede ser menor de 40 kilos si es obeso",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+                            }
+                        }
+
+                        2 -> {
+                            if (peso.toInt() <= 5.2f) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "El gato no puede ser menor de 5 kilos y obeso",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                            }
+
+                    }
                 }
-                Toast.makeText(requireContext(), "Mascota modificada", Toast.LENGTH_LONG).show()
-                mascotaActivity.onBackPressed()
+
+            }else {
+                val fechaActual = LocalDate.now()
+                val fecha = LocalDate.parse(mascotaEntity.fecha_nacimiento)
+                val periodo = Period.between(fecha, fechaActual)
+                mascotaEntity.edad = periodo.years
+                var mascota = MascotaEntity(
+                    mascotaEntity.id_mascota,
+                    mascotaEntity.nombre,
+                    mascotaEntity.fecha_nacimiento,
+                    peso,
+                    estadoMascota,
+                    mascotaEntity.edad,
+                    actividadMascota,
+                    tamanyoMascota,
+                    mascotaEntity.perroGato,
+                    mascotaEntity.usuario_id
+                )
+                viewLifecycleOwner.lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        repository.updateMascota(mascota)
+                    }
+                    Toast.makeText(requireContext(), "Mascota modificada", Toast.LENGTH_LONG).show()
+                    mascotaActivity.onBackPressed()
+                }
             }
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Valores no válidos", Toast.LENGTH_LONG).show()

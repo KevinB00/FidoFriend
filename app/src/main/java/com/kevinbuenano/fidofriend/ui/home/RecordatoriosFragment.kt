@@ -53,17 +53,22 @@ class RecordatoriosFragment : Fragment() {
 
             val datePickerDialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
                 fecha = LocalDate.of(year, month + 1, dayOfMonth)
+                fechaString = fecha?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString()
             }, fechaActual.year, fechaActual.monthValue - 1, fechaActual.dayOfMonth)
 
             datePickerDialog.datePicker.minDate = fechaActual.toEpochDay() * 1000
             datePickerDialog.show()
-            fechaString = fecha?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString()
             binding.edTextDia.setText(fechaString)
         }
 
         binding.btnAnyadirNoti.setOnClickListener {
             scheduleNotification()
+            guardarNotificacion()
         }
+    }
+
+    private fun guardarNotificacion() {
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

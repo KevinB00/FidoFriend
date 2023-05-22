@@ -88,8 +88,14 @@ class MostrarMejoraFragment : Fragment() {
                                 "Actividad" ->{
                                     if (numPaseo >= 3){
                                         binding.tViewMostrarInfo.text = "Su mascota ya es activa, se recomienda que coma 90 gramos de comida. Siga sacándolo tres veces o más al día, como es un cachorro necesita una buena actividad, así luego no será tan imperactivo en su hogar."
-                                    }else{
+                                    }else if(numPaseo < 3 && mascotaEntity.estado == "Obeso"){
                                         binding.tViewMostrarInfo.text = "Su mascota debe salir como mínimo 3 veces al día, tienen que comer los gramos de comida recomendados. Si es sedentaria debe controlar su comida. Una manera de sacarlo a pasear es llevarlo a parques de perros dónde pueda coger el gusto a salir."
+                                    }else if(numPaseo < 3 && mascotaEntity.estado == "Cachorro"){
+                                        binding.tViewMostrarInfo.text = "Su mascota aún es menor por lo tanto se debe centrar en educarlo más que en salir, puede salir para cansarlo y que haga sus necesidades."
+                                    }else if(numPaseo < 3 && mascotaEntity.estado == "Enfermo"){
+                                        binding.tViewMostrarInfo.text = "Debe llevarlo al veterinario para que pueda recomendar la mejor solución a su mascota, luego que se recupere puede centrarse en sacarlo a pasear."
+                                    }else{
+                                        binding.tViewMostrarInfo.text = "Debe sacar a pasear a su mascota mínimo 3 veces al día. "
                                     }
 
                                     if (mascotaEntity.actividad == "Muy activo"){
@@ -129,8 +135,12 @@ class MostrarMejoraFragment : Fragment() {
 
                                 }
                                 "Tranquilizar" -> {
-                                    binding.tViewMostrarInfo.text = "Si quiere que su mascota se tranquilice puede sacarlo a pasear las tres veces al día. Es normal que sea imperactivo ya que es un cachorro debe cansarlo y aprender a educarlo tambíen aún es un cachorro y tiene mucha energia en todo momento."
-
+                                    if (mascotaEntity.estado == "Cachorro") {
+                                        binding.tViewMostrarInfo.text =
+                                            "Si quiere que su mascota se tranquilice puede sacarlo a pasear las tres veces al día. Es normal que sea imperactivo ya que es un cachorro debe cansarlo y aprender a educarlo tambíen aún es un cachorro y tiene mucha energia en todo momento."
+                                    }else if (mascotaEntity.estado == "Obeso") {
+                                        binding.tViewMostrarInfo.text = "Al revés su mascota está obesa debe intentar ponerlo en actividad. Si el problema de obesidad persiste aún siguiendo las recomendaciones debe llevarlo al veterinario a que lo revisen."
+                                    }
                                     if (mascotaEntity.actividad == "Muy activo"){
                                         binding.tViewTextActividad.text = "Ya es muy activa su mascota simplemente debe controlar su comida."
                                     }else if (mascotaEntity.actividad == "Moderado"){
@@ -155,8 +165,9 @@ class MostrarMejoraFragment : Fragment() {
                                     }else{
                                         binding.tViewMostrarInfo.text = "Su mascota debe salir como mínimo 3 veces al día, tienen que comer 90 gramos de comida. Si es sedentaria debe controlar su comida. Una manera de sacarlo a pasear es llevarlo a parques de perros dónde pueda coger el gusto a salir."
                                     }
-
-                                    if (mascotaEntity.actividad == "Muy activo"){
+                                    if (mascotaEntity.edad > 14) {
+                                        binding.tViewTextActividad.text = "${mascotaEntity.nombre} es mayor por lo tanto se debe preocupar únicamente de sacarlo 3 veces al día y controlar su peso. Aún así se recomienda que algún día a la semana salga a correr o realizar un paseo largo."
+                                    }else if (mascotaEntity.actividad == "Muy activo"){
                                         binding.tViewTextActividad.text = "Ya es muy activa su mascota simplemente debe controlar su comida."
                                     }else if (mascotaEntity.actividad == "Moderado"){
                                         binding.tViewTextActividad.text = "Debe realizar un poco más de actividad, por ejemplo puede salir con su mascota y llevarla a correr con usted."
@@ -224,6 +235,11 @@ class MostrarMejoraFragment : Fragment() {
                     }
                     when(mejora){
                         "Actividad" ->{
+                            if (mascotaEntity.estado == "Obeso"){
+                                binding.tViewMostrarInfo.text = "Su gato debe realizar actividades que lo hagan correr y saltar. También debe seguir laa cantidades de comida que se recomiendan. Debe rellenarle el comedero dos veces con esas cantidades."
+                            }else if(mascotaEntity.estado == "Enfermo"){
+                                binding.tViewMostrarInfo.text = "Debe realizar alguna actividad que lo haga moverse tampoco le fatigues demasiado tiene que tener una buena recuperación, consulte al veterinario si tiene complicaciones para seguir la comida o para realizar actividades."
+                            }
                             if (mascotaEntity.actividad == "Muy activo"){
                                 binding.tViewTextActividad.text = "Ya es muy activa su mascota simplemente debe controlar su comida."
                             }else if (mascotaEntity.actividad == "Moderado"){
@@ -234,14 +250,20 @@ class MostrarMejoraFragment : Fragment() {
                         }
                         "Peso" -> {
                             if (mascotaEntity.peso < 3.5){
-                                binding.tViewMostrarInfo.text = "Tiene muy poco peso se le recomienda que lo alimente como se muestra arriba. Su peso ideal debe ser mínimo de 4 kg."
+                                binding.tViewMostrarInfo.text = "Tiene muy poco peso se le recomienda que lo alimente como se muestra arriba y a la vez se fortalezca corriendo y saltando, juegue con él, si aún así se siente decaído y sin energías debe llevarlo al veterinario. Su peso ideal debe ser mínimo de 4 kg."
                             }else{
                                 binding.tViewMostrarInfo.text = "Su mascota tiene un peso normal, la recomendacion sería que tuviera una actividad moderada, para controlar su peso."
                             }
 
                         }
                         "Tranquilizar" -> {
-                            binding.tViewMostrarInfo.text = "Si su gato es imperactivo lo más probable es que quiera jugar con usted. También puede proporcionarle un rascador."
+                            if (mascotaEntity.estado == "Obeso"){
+                                binding.tViewMostrarInfo.text = "Debe realizar actividad no tranquilizarlo si se le tranquiliza con obesidad puede llegar a ser sedentario."
+                            }else if (mascotaEntity.actividad == "Sedentario" && mascotaEntity.edad > 14){
+                                binding.tViewMostrarInfo.text = "${mascotaEntity.nombre} ya es mayor por lo tanto es normal que sea más sedentario, tiene menos energía que de joven. Lo que tiene que preocuparse es controlar su peso. Un rascador es buena opción. "
+                            }else{
+                                binding.tViewMostrarInfo.text = "Si su gato es imperactivo lo más probable es que quiera jugar con usted. También puede proporcionarle un rascador."
+                            }
                         }
                         "Paseo" -> {
                             binding.tViewMostrarInfo.text = "Difícil es encontrar un sitio dónde llevar a un gato, pero si inciste en llevarlo a un sitio una opción seria llevarlo a una playa tranquila, importante llevarlo con el transportin y una correa de gatos."

@@ -11,24 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="101dp"
-        android:layout_marginBottom="20dp"
         android:text="Añadir"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/btnBorrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edTextDescrip" />
-
-    <Button
-        android:id="@+id/btnBorrar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#E80E0E"
-        android:text="Borrar"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edTextDescrip" />
 
     <EditText
         android:id="@+id/edTextDia"
