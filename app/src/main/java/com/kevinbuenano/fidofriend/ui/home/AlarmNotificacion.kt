@@ -14,21 +14,22 @@ import kotlin.random.Random
 
 class AlarmNotificacion: BroadcastReceiver() {
 
-
+companion object{
+    val NOTIFICATION_ID = Random.nextInt()
+}
     override fun onReceive(context: Context, intent: Intent?) {
         val titulo = intent?.getStringExtra("title").toString()
         val mensaje = intent?.getStringExtra("description").toString()
-        val notification_id = Random.nextInt()
+
         if (titulo != null && mensaje != null) {
-            crearNotificacion(context, titulo, mensaje, notification_id)
+            crearNotificacion(context, titulo, mensaje)
         }
     }
 
     private fun crearNotificacion(
         context: Context,
         titulo: String,
-        mensaje: String,
-        notification_id: Int
+        mensaje: String
     ) {
 
         val intent = Intent(context, LoginActivity::class.java).apply {
@@ -50,7 +51,7 @@ class AlarmNotificacion: BroadcastReceiver() {
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(notification_id, notification)
+        manager.notify(NOTIFICATION_ID, notification)
     }
 
 }

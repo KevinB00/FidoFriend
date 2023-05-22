@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/mostrarMejoraFragment"
         android:name="com.kevinbuenano.fidofriend.ui.mascota.MostrarMejoraFragment"
-        android:label="fragment_mostrar_mejora"
+        android:label="Datos a mejorar"
         tools:layout="@layout/fragment_mostrar_mejora" >
         <argument
             android:name="numComida"
