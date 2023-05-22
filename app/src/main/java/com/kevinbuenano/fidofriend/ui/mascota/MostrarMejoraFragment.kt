@@ -140,6 +140,8 @@ class MostrarMejoraFragment : Fragment() {
                                             "Si quiere que su mascota se tranquilice puede sacarlo a pasear las tres veces al día. Es normal que sea imperactivo ya que es un cachorro debe cansarlo y aprender a educarlo tambíen aún es un cachorro y tiene mucha energia en todo momento."
                                     }else if (mascotaEntity.estado == "Obeso") {
                                         binding.tViewMostrarInfo.text = "Al revés su mascota está obesa debe intentar ponerlo en actividad. Si el problema de obesidad persiste aún siguiendo las recomendaciones debe llevarlo al veterinario a que lo revisen."
+                                    }else{
+                                        binding.tViewMostrarInfo.text = "Debe sacarlo y cansarlo, pruebe llevarlo a un parque de perros o de senderismo actividades que hagan que se canse y al llegar al hogar llegue a descansar."
                                     }
                                     if (mascotaEntity.actividad == "Muy activo"){
                                         binding.tViewTextActividad.text = "Ya es muy activa su mascota simplemente debe controlar su comida."

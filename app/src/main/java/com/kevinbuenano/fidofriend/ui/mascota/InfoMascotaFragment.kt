@@ -71,7 +71,7 @@ class InfoMascotaFragment : Fragment() {
             }
             binding.tViewNombreMascota.text = mascotaEntity.nombre
             binding.tViewNumeroPeso.text = "${mascotaEntity.peso} Kg"
-            val diferencia = binding.tViewDifNum.text.toString().toFloat() - mascotaEntity.peso
+            val diferencia = binding.tViewDifNum.text.toString().toFloat() + mascotaEntity.peso
             binding.tViewDifNum.text = diferencia.toString()
             binding.tViewEstadoRes.text = mascotaEntity.estado
             binding.tViewEdadNum.text = "${mascotaEntity.edad}"

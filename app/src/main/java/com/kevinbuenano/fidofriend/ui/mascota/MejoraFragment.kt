@@ -26,7 +26,7 @@ class MejoraFragment : Fragment() {
     private lateinit var db: appDatabase
     private lateinit var repository: mascotaRepository
     var idMascota: Int = 0
-    val tipoMejora = arrayOf("Actividad", "Peso", "Tranqulizar", "Paseo", "Rutina")
+    val tipoMejora = arrayOf("Actividad", "Peso", "Tranquilizar", "Paseo", "Rutina")
     private lateinit var mejora: String
     lateinit var navController: NavController
 

@@ -42,8 +42,8 @@
 
     <TextView
         android:id="@+id/tViewMostrarInfo"
-        android:layout_width="306dp"
-        android:layout_height="215dp"
+        android:layout_width="277dp"
+        android:layout_height="245dp"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tViewMostrarPaseos"
@@ -63,9 +63,8 @@
 
     <TextView
         android:id="@+id/tViewTextActividad"
-        android:layout_width="278dp"
-        android:layout_height="163dp"
-        android:text="TextView"
+        android:layout_width="286dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tViewMostrarActividad"
         app:layout_constraintTop_toTopOf="@+id/tViewMostrarActividad" />
