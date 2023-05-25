@@ -10,23 +10,26 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.kevinbuenano.fidofriend.ui.LoginActivity
+import kotlin.random.Random
 
 class AlarmNotificacion: BroadcastReceiver() {
 
+companion object{
+    val NOTIFICATION_ID = Random.nextInt()
+}
     override fun onReceive(context: Context, intent: Intent?) {
         val titulo = intent?.getStringExtra("title").toString()
         val mensaje = intent?.getStringExtra("description").toString()
-        val NOTIFICATION_ID = intent?.getIntExtra("NOTIFICATION_ID", 0)
+
         if (titulo != null && mensaje != null) {
-            crearNotificacion(context, titulo, mensaje, NOTIFICATION_ID)
+            crearNotificacion(context, titulo, mensaje)
         }
     }
 
     private fun crearNotificacion(
         context: Context,
         titulo: String,
-        mensaje: String,
-        NOTIFICATION_ID: Int?
+        mensaje: String
     ) {
 
         val intent = Intent(context, LoginActivity::class.java).apply {
@@ -48,7 +51,7 @@ class AlarmNotificacion: BroadcastReceiver() {
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(NOTIFICATION_ID!!, notification)
+        manager.notify(NOTIFICATION_ID, notification)
     }
 
 }

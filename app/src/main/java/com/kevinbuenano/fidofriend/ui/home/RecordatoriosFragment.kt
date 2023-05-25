@@ -17,10 +17,10 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.kevinbuenano.fidofriend.databinding.FragmentRecordatoriosBinding
+import com.kevinbuenano.fidofriend.ui.home.AlarmNotificacion.Companion.NOTIFICATION_ID
 import java.time.LocalDate
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import kotlin.random.Random
 
 
 /**
@@ -74,12 +74,10 @@ class RecordatoriosFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun scheduleNotification() {
         try {
-            val NOTIFICATION_ID = Random.nextInt()
             val intent =
                 Intent(requireContext().applicationContext, AlarmNotificacion::class.java).apply {
                     putExtra("title", binding.edTitulo.text.toString())
                     putExtra("description", binding.edTextDescrip.text.toString())
-                    putExtra("NOTIFICATION_ID", NOTIFICATION_ID)
                 }
             val pendingIntent = PendingIntent.getBroadcast(
                 requireContext().applicationContext,
