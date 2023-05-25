@@ -63,12 +63,7 @@ class RecordatoriosFragment : Fragment() {
 
         binding.btnAnyadirNoti.setOnClickListener {
             scheduleNotification()
-            guardarNotificacion()
         }
-    }
-
-    private fun guardarNotificacion() {
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
