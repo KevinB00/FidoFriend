@@ -29,6 +29,7 @@ class InfoMascotaFragment : Fragment() {
     private lateinit var db: appDatabase
     private lateinit var repository: mascotaRepository
     var idMascota: Int = 0
+    var diferencia: Float = 0.0f
     private lateinit var mascotaEntity: MascotaEntity
 
     override fun onCreateView(
@@ -53,7 +54,23 @@ class InfoMascotaFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        cargar()
+        recargar()
+    }
+
+    private fun recargar() {
+        viewLifecycleOwner.lifecycleScope.launch{
+            mascotaEntity = withContext(Dispatchers.IO){
+                repository.getMascotaById(idMascota)
+            }
+            binding.tViewNombreMascota.text = mascotaEntity.nombre
+            binding.tViewNumeroPeso.text = "${mascotaEntity.peso} Kg"
+            diferencia = mascotaEntity.peso - binding.tViewDifNum.text.toString().toFloat()
+            binding.tViewDifNum.text = diferencia.toString()
+            binding.tViewEstadoRes.text = mascotaEntity.estado
+            binding.tViewEdadNum.text = "${mascotaEntity.edad}"
+            cargarActividad()
+
+        }
     }
 
     private fun cargarActividad() {
@@ -71,7 +88,6 @@ class InfoMascotaFragment : Fragment() {
             }
             binding.tViewNombreMascota.text = mascotaEntity.nombre
             binding.tViewNumeroPeso.text = "${mascotaEntity.peso} Kg"
-            val diferencia = mascotaEntity.peso - binding.tViewDifNum.text.toString().toFloat()
             binding.tViewDifNum.text = diferencia.toString()
             binding.tViewEstadoRes.text = mascotaEntity.estado
             binding.tViewEdadNum.text = "${mascotaEntity.edad}"
