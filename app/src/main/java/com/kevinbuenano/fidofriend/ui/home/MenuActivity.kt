@@ -33,21 +33,8 @@ class MenuActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController)
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
 
-        /*try {
-            val viewModelProvider = ViewModelProvider(
-                navController.getViewModelStoreOwner(R.id.menu_graph_xml),
-                ViewModelProvider.AndroidViewModelFactory(application)
-            )
-            usuarioViewModel = viewModelProvider[UsuarioViewModel::class.java]
-            mascotaViewModel = viewModelProvider[MascotaViewModel::class.java]
-
-        }catch (e: IllegalArgumentException){
-            e.printStackTrace()
-        }*/
-
     }
 
     fun getDB(): appDatabase =  db
-
 
 }
